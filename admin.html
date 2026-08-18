@@ -1,228 +1,1472 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>School Information Admin</title>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
+<title>CBEO Office Bassi - Admin</title>
+
+
 <style>
-*{box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;color:#17202a}
-.wrap{max-width:1000px;margin:20px auto;padding:12px}
-.card{background:#fff;border-radius:14px;padding:22px;box-shadow:0 3px 15px #0001;margin-bottom:16px}
-h1{margin-top:0}
-label{font-weight:700;display:block;margin:12px 0 6px}
-input,textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}
-button{padding:11px 16px;border:0;border-radius:8px;background:#2563eb;color:#fff;font-size:15px;cursor:pointer;margin:5px 4px 0 0}
-button:hover{opacity:.9}
-.secondary{background:#475569}
-.green{background:#15803d}
-.red{background:#dc2626}
-.gray{background:#64748b}
-.msg{margin-top:12px;padding:11px;border-radius:8px;word-break:break-word}
-.ok{background:#ecfdf3;color:#166534}
-.err{background:#fef2f2;color:#991b1b}
-.hint{font-size:13px;color:#64748b;margin-top:5px}
-.row{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;margin:8px 0}
-.school-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin:8px 0}
-.check{display:flex;align-items:center;gap:6px;white-space:nowrap;font-size:14px}
-.check input{width:auto}
-.link{margin-top:10px;padding:12px;background:#f8fafc;border-radius:8px;word-break:break-all}
-.badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:4px 8px;border-radius:999px;font-size:12px}
-@media(max-width:650px){.row{grid-template-columns:1fr}.school-row{grid-template-columns:1fr}}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+
+  margin:0;
+
+  font-family:
+    Arial,
+    "Noto Sans Devanagari",
+    sans-serif;
+
+  background:#f1f5f9;
+
+  color:#172033;
+}
+
+
+.container{
+
+  max-width:1000px;
+
+  margin:25px auto;
+
+  padding:15px;
+}
+
+
+.card{
+
+  background:white;
+
+  border-radius:14px;
+
+  padding:22px;
+
+  margin-bottom:18px;
+
+  box-shadow:
+    0 4px 18px rgba(0,0,0,.08);
+}
+
+
+h1{
+
+  margin-top:0;
+
+  color:#1e3a8a;
+
+}
+
+
+h2{
+
+  margin-top:0;
+
+  color:#334155;
+
+}
+
+
+label{
+
+  display:block;
+
+  font-weight:bold;
+
+  margin-top:15px;
+
+  margin-bottom:7px;
+}
+
+
+input,
+textarea{
+
+  width:100%;
+
+  padding:12px;
+
+  border:1px solid #cbd5e1;
+
+  border-radius:8px;
+
+  font-size:15px;
+
+  font-family:inherit;
+}
+
+
+textarea{
+
+  resize:vertical;
+
+  min-height:120px;
+}
+
+
+button{
+
+  border:none;
+
+  border-radius:8px;
+
+  padding:11px 17px;
+
+  margin-top:10px;
+
+  cursor:pointer;
+
+  color:white;
+
+  font-size:15px;
+
+  font-weight:bold;
+}
+
+
+.primary{
+
+  background:#2563eb;
+}
+
+
+.success{
+
+  background:#15803d;
+}
+
+
+.warning{
+
+  background:#d97706;
+}
+
+
+.danger{
+
+  background:#dc2626;
+}
+
+
+.gray{
+
+  background:#475569;
+}
+
+
+button:hover{
+
+  opacity:.9;
+}
+
+
+.hint{
+
+  font-size:13px;
+
+  color:#64748b;
+
+  margin-top:6px;
+
+  line-height:1.5;
+}
+
+
+.msg{
+
+  margin-top:15px;
+
+  padding:12px;
+
+  border-radius:8px;
+
+  display:none;
+}
+
+
+.msg.ok{
+
+  display:block;
+
+  background:#dcfce7;
+
+  color:#166534;
+}
+
+
+.msg.err{
+
+  display:block;
+
+  background:#fee2e2;
+
+  color:#991b1b;
+}
+
+
+/* ==========================================
+   SCHOOL LIST
+========================================== */
+
+.school-display{
+
+  border:1px solid #cbd5e1;
+
+  background:#f8fafc;
+
+  border-radius:10px;
+
+  padding:12px;
+
+  max-height:500px;
+
+  overflow-y:auto;
+
+  line-height:1.6;
+}
+
+
+.school-item{
+
+  padding:9px 8px;
+
+  border-bottom:1px solid #e2e8f0;
+}
+
+
+.school-item:last-child{
+
+  border-bottom:none;
+}
+
+
+.school-edit{
+
+  display:none;
+}
+
+
+.school-edit textarea{
+
+  min-height:500px;
+
+  font-size:14px;
+
+  line-height:1.5;
+}
+
+
+.edit-buttons{
+
+  display:none;
+
+  gap:8px;
+
+  flex-wrap:wrap;
+}
+
+
+.edit-mode .school-display{
+
+  display:none;
+}
+
+
+.edit-mode .school-edit{
+
+  display:block;
+}
+
+
+.edit-mode .edit-main-button{
+
+  display:none;
+}
+
+
+.edit-mode .edit-buttons{
+
+  display:flex;
+}
+
+
+/* ==========================================
+   COLUMNS
+========================================== */
+
+.column-row{
+
+  display:grid;
+
+  grid-template-columns:
+    1fr
+    auto
+    auto;
+
+  gap:8px;
+
+  align-items:center;
+
+  margin-bottom:8px;
+}
+
+
+.required-box{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:5px;
+
+  white-space:nowrap;
+
+  font-size:14px;
+}
+
+
+.required-box input{
+
+  width:auto;
+}
+
+
+.remove-column{
+
+  background:#dc2626;
+
+  margin-top:0;
+}
+
+
+@media(max-width:650px){
+
+  .column-row{
+
+    grid-template-columns:1fr;
+
+  }
+
+}
+
 </style>
+
 </head>
+
+
 <body>
-<div class="wrap">
+
+
+<div class="container">
+
+
+<!-- =========================================
+     MAIN ADMIN CARD
+========================================= -->
 
 <div class="card">
-<h1>School Information – Admin</h1>
 
-<label>Admin PIN</label>
-<input id="pin" type="password" value="1234">
 
-<label>Existing Form ID <span class="badge">केवल Edit के लिए</span></label>
-<input id="editId" placeholder="पुराने form की ID यहाँ डालें">
-<div class="hint">नया form बनाना हो तो इसे खाली छोड़ें। पुराने form को बदलना हो तो Form ID डालकर Load करें।</div>
-<button class="secondary" onclick="loadExisting()">✏️ Edit Form Load करें</button>
+<h1>CBEO OFFICE BASSI</h1>
 
-<label>सूचना का नाम</label>
-<input id="name" placeholder="Teacher Information">
+<p class="hint">
+School Information Form – Admin Panel
+</p>
 
-<label>Columns</label>
-<div id="columns"></div>
-<button class="secondary" onclick="addColumn()">➕ Column जोड़ें</button>
-<div class="hint">हर column के सामने Mandatory (*) लगाएँ। Mandatory column खाली होने पर School page से Submit नहीं होगा।</div>
 
-<label>Schools – एक line में एक</label>
-<textarea id="schools" rows="12" placeholder="GOVT. SCHOOL 1
-GOVT. SCHOOL 2
-GOVT. SCHOOL 3"></textarea>
-<div class="hint">यहाँ जो school names सेव होंगे वही School page पर fixed/selectable रहेंगे और Google Sheet में School Name अपने-आप आएगा।</div>
+<!-- =========================================
+     PIN
+========================================= -->
 
-<label class="check">
-<input id="allowAddRow" type="checkbox">
-School page पर “Add Row” दिखाएँ
+<label>
+Admin PIN
 </label>
-<div class="hint">Off रहने पर एक school के लिए केवल 1 row रहेगी। On रहने पर school page पर Add Row दिखाई देगा।</div>
 
-<button class="green" onclick="saveForm()">💾 Save / Create Form</button>
+<input
+  id="pin"
+  type="password"
+  placeholder="Admin PIN डालें"
+  autocomplete="off"
+>
 
-<div id="msg"></div>
-
-<div id="result" style="display:none">
-<h3>✅ Form तैयार है</h3>
-<div class="link">
-<b>Form ID:</b><br><span id="formIdOut"></span><br><br>
-<b>School Link:</b><br><span id="schoolLink"></span>
-</div>
-<button class="green" onclick="copyLink()">📋 Copy Link</button>
-</div>
+<div class="hint">
+PIN यहाँ खाली रहेगा। हर बार Admin को PIN डालना होगा।
 </div>
 
-<div class="card">
-<h3>Column सेटिंग का उदाहरण</h3>
-<div class="hint">उदाहरण: Teacher Name = Mandatory, Subject = Optional, Mobile = Mandatory.</div>
+
+
+<!-- =========================================
+     INFORMATION NAME
+========================================= -->
+
+<label>
+सूचना का नाम
+</label>
+
+<input
+  id="formName"
+  type="text"
+  placeholder="जैसे - Student Information"
+>
+
+
+
+<!-- =========================================
+     SCHOOL NAME
+========================================= -->
+
+<label>
+School Name
+</label>
+
+
+<div id="schoolBox">
+
+
+<!-- NORMAL LOCKED VIEW -->
+
+<div
+  id="schoolDisplay"
+  class="school-display"
+>
 </div>
 
+
+<!-- EDIT VIEW -->
+
+<div
+  id="schoolEdit"
+  class="school-edit"
+>
+
+<textarea
+  id="schoolTextarea"
+  placeholder="एक लाइन में एक School Name लिखें"
+></textarea>
+
 </div>
+
+
+<!-- NORMAL EDIT BUTTON -->
+
+<button
+  id="editSchoolButton"
+  class="warning edit-main-button"
+  onclick="startSchoolEdit()"
+>
+✏️ EDIT SCHOOL LIST
+</button>
+
+
+<!-- EDIT MODE BUTTONS -->
+
+<div
+  id="editButtons"
+  class="edit-buttons"
+>
+
+<button
+  class="success"
+  onclick="saveSchoolList()"
+>
+💾 SAVE SCHOOL LIST
+</button>
+
+
+<button
+  class="gray"
+  onclick="cancelSchoolEdit()"
+>
+❌ CANCEL
+</button>
+
+</div>
+
+
+</div>
+
+
+<div class="hint">
+
+Edit School List पर क्लिक करने के बाद पूरी list एक साथ editable होगी।
+<br>
+
+नई School जोड़ने के लिए नई line लिखें।
+<br>
+
+School हटाने के लिए उसकी पूरी line delete करें।
+
+</div>
+
+
+
+<!-- =========================================
+     ADD ROW
+========================================= -->
+
+<label>
+School Page Setting
+</label>
+
+
+<label
+  style="
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:normal;
+  "
+>
+
+<input
+  id="allowAddRow"
+  type="checkbox"
+  style="width:auto"
+>
+
+School page पर <b>Add Row</b> button दिखाएँ
+
+</label>
+
+
+<div class="hint">
+
+OFF = केवल एक Row
+
+<br>
+
+ON = School page पर Add Row दिखाई देगा।
+
+</div>
+
+
+
+<!-- =========================================
+     COLUMNS
+========================================= -->
+
+<label>
+Information Columns
+</label>
+
+
+<div id="columns"></div>
+
+
+<button
+  class="gray"
+  onclick="addColumn()"
+>
+➕ ADD COLUMN
+</button>
+
+
+<div class="hint">
+
+हर Column के सामने Mandatory (*) option रहेगा।
+
+Mandatory column खाली होने पर School Information save नहीं होगी।
+
+</div>
+
+
+
+<!-- =========================================
+     SAVE FORM
+========================================= -->
+
+<button
+  class="success"
+  onclick="saveForm()"
+>
+💾 SAVE FORM
+</button>
+
+
+<div
+  id="message"
+  class="msg"
+></div>
+
+
+</div>
+
+
+
+<!-- =========================================
+     FORM LINK
+========================================= -->
+
+<div
+  id="resultCard"
+  class="card"
+  style="display:none"
+>
+
+
+<h2>
+✅ Form Successfully Saved
+</h2>
+
+
+<label>
+Form ID
+</label>
+
+<input
+  id="resultFormId"
+  readonly
+>
+
+
+<label>
+School Page Link
+</label>
+
+<input
+  id="resultLink"
+  readonly
+>
+
+
+<button
+  class="primary"
+  onclick="copySchoolLink()"
+>
+📋 COPY SCHOOL LINK
+</button>
+
+
+</div>
+
+
+</div>
+
+
 
 <script>
-const API = "https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
-let columnRows = [];
 
-const $ = id => document.getElementById(id);
 
-function showMsg(text,type){
-  const box=$("msg");
-  box.className="msg "+type;
-  box.innerText=text;
+/* ==================================================
+   APPS SCRIPT URL
+================================================== */
+
+const API =
+
+"https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
+
+
+/* ==================================================
+   FIXED INITIAL SCHOOL LIST
+================================================== */
+
+let schools = [
+
+"GOVT. SENIOR SECONDARY SCHOOL BAGRANA (218770)",
+
+"GOVT. SENIOR SECONDARY SCHOOL BAINADA (218703)",
+
+"GOVT. SENIOR SECONDARY SCHOOL BADWA BASSI JAIPUR (218741)",
+
+"GOVT. SENIOR SECONDARY SCHOOL BANSKHOH (218737)",
+
+"MAHATMA GANDHI GOVT. SCHOOL BANSKHOH (218736)",
+
+"GOVT. SENIOR SECONDARY SCHOOL BASSI (218757)",
+
+"GOVT. SENIOR SECONDARY SCHOOL BHAJUPURA (218707)",
+
+"GOVT. SENIOR SECONDARY SCHOOL BUDTHAL BASSI JAIPUR (218713)",
+
+"MAHATMA GANDHI GOVT. SCHOOL DHANI KISHANA PATEL (410076)",
+
+"GOVT. SENIOR SECONDARY SCHOOL DAMODARPURA (218730)",
+
+"MAHATMA GANDHI GOVT. SCHOOL GIRDHARIPURA (218709)",
+
+"GOVT. SENIOR SECONDARY SCHOOL GHATA (489819)",
+
+"GOVT. SENIOR SECONDARY SCHOOL GUDHA PHALIYAWAS (218716)",
+
+"MAHATMA GANDHI GOVT. SCHOOL GUDHA CHAK BASSI (218759)",
+
+"GOVT. SENIOR SECONDARY SCHOOL HANSMAHAL (218743)",
+
+"MAHATMA GANDHI GOVT. SCHOOL HARDI (465494)",
+
+"GOVT. SENIOR SECONDARY SCHOOL HEERAWALA (472375)",
+
+"GOVT. SENIOR SECONDARY SCHOOL JATWARA (218738)",
+
+"GOVT. SENIOR SECONDARY SCHOOL JHAR (218734)",
+
+"GOVT. GIRLS SENIOR SECONDARY SCHOOL JHAR BASSI (464824)",
+
+"GOVT. SENIOR SECONDARY SCHOOL JEETAWALA (218708)",
+
+"GOVT. SENIOR SECONDARY SCHOOL KACHOLIYA (218717)",
+
+"MAHATMA GANDHI GOVT. SCHOOL KANOTA (218711)",
+
+"GOVT. SENIOR SECONDARY SCHOOL KANOTA (218712)",
+
+"GOVT. SENIOR SECONDARY SCHOOL KHEDLA VAS (469413)",
+
+"GOVT. SENIOR SECONDARY SCHOOL KHO GHATI (218702)",
+
+"GOVT. SENIOR SECONDARY SCHOOL KHOKHAWALA (489812)",
+
+"GOVT. SENIOR SECONDARY SCHOOL KSHETRAPAL (218735)",
+
+"GOVT. SENIOR SECONDARY SCHOOL KUNTHADA KALAN BASSI (218701)",
+
+"GOVT. SENIOR SECONDARY SCHOOL KUNTHADA KHURD (218700)",
+
+"GOVT. SENIOR SECONDARY SCHOOL LALGARH (218728)",
+
+"GOVT. SENIOR SECONDARY SCHOOL MALIHALA KHORI (464828)",
+
+"GOVT. SENIOR SECONDARY SCHOOL MANOHARPURA (218706)",
+
+"GOVT. SENIOR SECONDARY SCHOOL MANSAR KHEDI (218704)",
+
+"MAHATMA GANDHI GOVT. SCHOOL MOHANPURA (218731)",
+
+"GOVT. SENIOR SECONDARY SCHOOL PADASOLI BASSI JAIPUR (218742)",
+
+"GOVT. SENIOR SECONDARY SCHOOL PHALIYAWAS (218715)",
+
+"GOVT. SENIOR SECONDARY SCHOOL RAJOLAI (405625)",
+
+"MAHATMA GANDHI GOVT. SCHOOL RAILWAY BASSI (402317)",
+
+"GOVT. SENIOR SECONDARY SCHOOL RAMRATANPURA (218699)",
+
+"GOVT. SENIOR SECONDARY SCHOOL RAMSINGHPURA (218714)",
+
+"GOVT. SENIOR SECONDARY SCHOOL RAMSAR PALAWALA (218710)",
+
+"GOVT. SENIOR SECONDARY SCHOOL SANKH (227462)",
+
+"GOVT. GIRLS SENIOR SECONDARY SCHOOL SUJANPURA (218733)",
+
+"GOVT. SENIOR SECONDARY SCHOOL SUJANPURA (218732)",
+
+"GOVT. SENIOR SECONDARY SCHOOL SUMEL (218768)",
+
+"GOVT. GIRLS SENIOR SECONDARY SCHOOL TAHATADA (218739)",
+
+"GOVT. SENIOR SECONDARY SCHOOL TAHATADA (218740)",
+
+"GOVT. SENIOR SECONDARY SCHOOL TODA BHATA (218729)",
+
+"MAHATMA GANDHI GOVT. SCHOOL VIJAYPURA (218769)",
+
+"SHRIMATI NARBADA DEVI DANGAYACH GGSSS BASSI JAIPUR (218758)"
+
+];
+
+
+
+/* ==================================================
+   COLUMNS
+================================================== */
+
+let columns = [];
+
+
+/* ==================================================
+   HTML ESCAPE
+================================================== */
+
+function esc(value){
+
+  return String(value ?? "")
+
+    .replace(
+      /[&<>"']/g,
+      function(m){
+
+        return {
+
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#039;"
+
+        }[m];
+
+      }
+    );
+
 }
 
-function addColumn(name="", required=false){
-  columnRows.push({name:name, required:!!required});
+
+
+/* ==================================================
+   SHOW MESSAGE
+================================================== */
+
+function showMessage(
+  text,
+  type="ok"
+){
+
+  const box =
+    document.getElementById("message");
+
+  box.className =
+    "msg " + type;
+
+  box.innerText =
+    text;
+
+}
+
+
+
+/* ==================================================
+   RENDER SCHOOL DISPLAY
+================================================== */
+
+function renderSchools(){
+
+  const box =
+    document.getElementById(
+      "schoolDisplay"
+    );
+
+  box.innerHTML = "";
+
+
+  schools.forEach(
+    function(school,index){
+
+      const div =
+        document.createElement("div");
+
+      div.className =
+        "school-item";
+
+
+      div.innerHTML =
+
+        "<b>" +
+        (index + 1) +
+        ".</b> " +
+
+        esc(school);
+
+
+      box.appendChild(div);
+
+    }
+  );
+
+}
+
+
+
+/* ==================================================
+   START SCHOOL EDIT
+================================================== */
+
+function startSchoolEdit(){
+
+  const box =
+    document.getElementById(
+      "schoolBox"
+    );
+
+
+  document.getElementById(
+    "schoolTextarea"
+  ).value =
+    schools.join("\n");
+
+
+  box.classList.add(
+    "edit-mode"
+  );
+
+
+  document.getElementById(
+    "schoolTextarea"
+  ).focus();
+
+}
+
+
+
+/* ==================================================
+   SAVE SCHOOL LIST
+================================================== */
+
+function saveSchoolList(){
+
+  const text =
+    document.getElementById(
+      "schoolTextarea"
+    ).value;
+
+
+  const newSchools =
+
+    text
+      .split("\n")
+      .map(
+        x => x.trim()
+      )
+      .filter(
+        Boolean
+      );
+
+
+  if(!newSchools.length){
+
+    alert(
+      "कम से कम एक School होना चाहिए।"
+    );
+
+    return;
+
+  }
+
+
+  schools =
+    newSchools;
+
+
+  renderSchools();
+
+
+  document.getElementById(
+    "schoolBox"
+  ).classList.remove(
+    "edit-mode"
+  );
+
+
+  showMessage(
+    "School List update हो गई। अब SAVE FORM दबाएँ।",
+    "ok"
+  );
+
+}
+
+
+
+/* ==================================================
+   CANCEL SCHOOL EDIT
+================================================== */
+
+function cancelSchoolEdit(){
+
+  document.getElementById(
+    "schoolBox"
+  ).classList.remove(
+    "edit-mode"
+  );
+
+
+  document.getElementById(
+    "schoolTextarea"
+  ).value =
+    schools.join("\n");
+
+}
+
+
+
+/* ==================================================
+   ADD COLUMN
+================================================== */
+
+function addColumn(
+  name="",
+  required=false
+){
+
+  columns.push({
+
+    name:name,
+
+    required:required
+
+  });
+
+
   renderColumns();
+
 }
 
-function removeColumn(i){
-  columnRows.splice(i,1);
+
+
+/* ==================================================
+   REMOVE COLUMN
+================================================== */
+
+function removeColumn(index){
+
+  columns.splice(
+    index,
+    1
+  );
+
+
   renderColumns();
+
 }
+
+
+
+/* ==================================================
+   RENDER COLUMNS
+================================================== */
 
 function renderColumns(){
-  const box=$("columns");
-  box.innerHTML="";
-  columnRows.forEach((c,i)=>{
-    const div=document.createElement("div");
-    div.className="row";
-    div.innerHTML=`
-      <input placeholder="Column name" value="${esc(c.name)}"
-        oninput="columnRows[${i}].name=this.value">
-      <label class="check">
-        <input type="checkbox" ${c.required?"checked":""}
-          onchange="columnRows[${i}].required=this.checked">
-        Mandatory (*)
-      </label>
-      <button class="red" onclick="removeColumn(${i})">🗑️</button>`;
-    box.appendChild(div);
-  });
+
+  const box =
+    document.getElementById(
+      "columns"
+    );
+
+
+  box.innerHTML = "";
+
+
+  columns.forEach(
+    function(column,index){
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+
+      row.className =
+        "column-row";
+
+
+      row.innerHTML = `
+
+        <input
+
+          type="text"
+
+          placeholder="Column Name"
+
+          value="${esc(column.name)}"
+
+          oninput="
+            columns[${index}].name=this.value
+          "
+
+        >
+
+
+        <label class="required-box">
+
+          <input
+
+            type="checkbox"
+
+            ${
+              column.required
+              ? "checked"
+              : ""
+            }
+
+            onchange="
+              columns[${index}].required=this.checked
+            "
+
+          >
+
+          Mandatory (*)
+
+        </label>
+
+
+        <button
+
+          class="remove-column"
+
+          onclick="
+            removeColumn(${index})
+          "
+
+        >
+
+          🗑️
+
+        </button>
+
+      `;
+
+
+      box.appendChild(row);
+
+    }
+  );
+
 }
 
-function esc(s){
-  return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-}
 
-function getColumns(){
-  return columnRows
-    .map(c=>({name:String(c.name||"").trim(),required:!!c.required}))
-    .filter(c=>c.name);
-}
 
-async function loadExisting(){
-  const pin=$("pin").value.trim();
-  const id=$("editId").value.trim();
-  if(!pin) return showMsg("Admin PIN डालें","err");
-  if(!id) return showMsg("Edit के लिए Form ID डालें","err");
-
-  showMsg("Form load हो रहा है...","ok");
-  try{
-    const r=await api("getForm",{formId:id});
-    if(!r.ok) throw new Error(r.error||"Form नहीं मिला");
-    const f=r.form;
-    $("name").value=f.name||"";
-    $("schools").value=(f.schools||[]).join("\n");
-    $("allowAddRow").checked=!!f.allowAddRow;
-    columnRows=(f.columns||[]).map(c=>{
-      if(typeof c==="string") return {name:c,required:false};
-      return {name:c.name||"",required:!!c.required};
-    });
-    renderColumns();
-    showMsg("Form settings load हो गईं। अब बदलाव करके Save करें।","ok");
-  }catch(e){
-    showMsg("Error: "+e.message,"err");
-  }
-}
+/* ==================================================
+   SAVE FORM
+================================================== */
 
 async function saveForm(){
-  const pin=$("pin").value.trim();
-  const editId=$("editId").value.trim();
-  const name=$("name").value.trim();
-  const schools=$("schools").value.trim();
-  const columns=getColumns();
 
-  if(!pin) return showMsg("Admin PIN डालें","err");
-  if(!name) return showMsg("सूचना का नाम डालें","err");
-  if(!columns.length) return showMsg("कम से कम एक column डालें","err");
-  if(!schools) return showMsg("Schools की list डालें","err");
+  const pin =
+    document.getElementById(
+      "pin"
+    ).value.trim();
 
-  showMsg(editId ? "Form update हो रहा है..." : "Form बनाया जा रहा है...","ok");
+
+  const name =
+    document.getElementById(
+      "formName"
+    ).value.trim();
+
+
+  const allowAddRow =
+    document.getElementById(
+      "allowAddRow"
+    ).checked;
+
+
+  /* PIN */
+
+  if(!pin){
+
+    showMessage(
+      "Admin PIN डालें।",
+      "err"
+    );
+
+    return;
+
+  }
+
+
+  /* FORM NAME */
+
+  if(!name){
+
+    showMessage(
+      "सूचना का नाम डालें।",
+      "err"
+    );
+
+    return;
+
+  }
+
+
+  /* SCHOOL */
+
+  if(!schools.length){
+
+    showMessage(
+      "School List खाली है।",
+      "err"
+    );
+
+    return;
+
+  }
+
+
+  /* COLUMNS */
+
+  const cleanColumns =
+
+    columns
+
+      .map(
+        function(c){
+
+          return {
+
+            name:
+              String(
+                c.name || ""
+              ).trim(),
+
+            required:
+              !!c.required
+
+          };
+
+        }
+      )
+
+      .filter(
+        c => c.name
+      );
+
+
+  if(!cleanColumns.length){
+
+    showMessage(
+      "कम से कम एक Column डालें।",
+      "err"
+    );
+
+    return;
+
+  }
+
+
+  showMessage(
+    "Form save हो रहा है...",
+    "ok"
+  );
+
 
   try{
-    const r=await api(editId ? "updateForm" : "createForm", {
+
+
+    const params = {
+
       pin:pin,
-      formId:editId,
+
       name:name,
-      columns:JSON.stringify(columns),
-      schools:schools,
-      allowAddRow:$("allowAddRow").checked ? "true" : "false"
-    });
-    if(!r.ok) throw new Error(r.error||"Save नहीं हुआ");
 
-    const id=r.formId||editId;
-    $("editId").value=id;
-    $("formIdOut").innerText=id;
+      columns:
+        JSON.stringify(
+          cleanColumns
+        ),
 
-    const base=window.location.origin+
-      window.location.pathname.replace("admin.html","");
-    const url=base+"school.html?form="+encodeURIComponent(id);
-    $("schoolLink").innerText=url;
-    $("result").style.display="block";
-    showMsg(editId ? "✓ Form successfully update हो गया।" : "✓ Form successfully create हो गया।","ok");
-  }catch(e){
-    showMsg("Error: "+e.message,"err");
+      schools:
+        schools.join("\n"),
+
+      allowAddRow:
+        allowAddRow
+          ? "true"
+          : "false"
+
+    };
+
+
+    const result =
+      await api(
+        "createForm",
+        params
+      );
+
+
+    if(!result.ok){
+
+      throw new Error(
+        result.error ||
+        "Form create नहीं हुआ"
+      );
+
+    }
+
+
+    const formId =
+      result.formId;
+
+
+    document.getElementById(
+      "resultFormId"
+    ).value =
+      formId;
+
+
+    const GITHUB_BASE =
+      "https://hiteshmishra210.github.io/school-information/";
+
+    const schoolLink =
+      GITHUB_BASE +
+      "school.html?form=" +
+      encodeURIComponent(formId);
+
+
+    document.getElementById(
+      "resultLink"
+    ).value =
+      schoolLink;
+
+
+    document.getElementById(
+      "resultCard"
+    ).style.display =
+      "block";
+
+
+    showMessage(
+      "✅ Form successfully create हो गया।",
+      "ok"
+    );
+
+
   }
+
+  catch(error){
+
+    showMessage(
+      "Error: " +
+      error.message,
+      "err"
+    );
+
+  }
+
 }
 
-async function api(action,params={}){
-  const body=new URLSearchParams({action,...params});
-  const response=await fetch(API,{
-    method:"POST",
-    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
-    body
-  });
-  const text=await response.text();
+
+
+/* ==================================================
+   API CALL
+================================================== */
+
+async function api(
+  action,
+  params={}
+){
+
+  const query =
+    new URLSearchParams();
+
+
+  query.append(
+    "action",
+    action
+  );
+
+
+  Object.keys(params)
+    .forEach(
+      function(key){
+
+        query.append(
+          key,
+          params[key]
+        );
+
+      }
+    );
+
+
+  /*
+    Google Apps Script POST
+  */
+
+  const response =
+    await fetch(
+      API,
+      {
+
+        method:"POST",
+
+        headers:{
+          "Content-Type":
+            "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+
+        body:
+          query.toString()
+
+      }
+    );
+
+
+  const text =
+    await response.text();
+
+
   let data;
-  try{data=JSON.parse(text)}catch(e){throw new Error("Google API का response JSON नहीं है")}
-  if(!data.ok) throw new Error(data.error||"Google API error");
+
+
+  try{
+
+    data =
+      JSON.parse(text);
+
+  }
+
+  catch(e){
+
+    throw new Error(
+      "Apps Script से सही JSON response नहीं मिला।"
+    );
+
+  }
+
+
   return data;
+
 }
 
-function copyLink(){
-  const link=$("schoolLink").innerText;
-  navigator.clipboard.writeText(link).then(()=>alert("School Link copy हो गया ✅"));
+
+
+/* ==================================================
+   COPY LINK
+================================================== */
+
+function copySchoolLink(){
+
+  const input =
+    document.getElementById(
+      "resultLink"
+    );
+
+
+  input.select();
+
+
+  navigator.clipboard
+    .writeText(
+      input.value
+    )
+    .then(
+      function(){
+
+        alert(
+          "School Link copy हो गया ✅"
+        );
+
+      }
+    );
+
 }
 
-addColumn("Teacher Name",true);
-addColumn("Designation",false);
+
+
+/* ==================================================
+   INITIAL DATA
+================================================== */
+
+renderSchools();
+
+
+/*
+  Default columns
+*/
+
+addColumn(
+  "Teacher Name",
+  true
+);
+
+
 </script>
+
 </body>
 </html>
