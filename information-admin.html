@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="hi">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Information Admin</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  margin:0;
+  color:#17202a;
+}
+
+.wrap{
+  max-width:1100px;
+  margin:20px auto;
+  padding:12px;
+}
+
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 3px 15px #0001;
+}
+
+h1{
+  margin-top:0;
+  color:#173b75;
+}
+
+label{
+  font-weight:700;
+  display:block;
+  margin:12px 0 6px;
+}
+
+input,
+textarea{
+  width:100%;
+  padding:11px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  font-size:15px;
+}
+
+textarea{
+  resize:vertical;
+}
+
+button{
+  padding:11px 16px;
+  border:0;
+  border-radius:8px;
+  margin:5px 3px;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.blue{
+  background:#2563eb;
+  color:white;
+}
+
+.green{
+  background:#15803d;
+  color:white;
+}
+
+.gray{
+  background:#e2e8f0;
+  color:#111;
+}
+
+.red{
+  background:#dc2626;
+  color:white;
+}
+
+.msg{
+  padding:11px;
+  margin-top:12px;
+  border-radius:8px;
+  word-break:break-word;
+}
+
+.ok{
+  background:#ecfdf3;
+  color:#166534;
+}
+
+.err{
+  background:#fef2f2;
+  color:#991b1b;
+}
+
+.loading{
+  background:#eff6ff;
+  color:#1d4ed8;
+}
+
+.hidden{
+  display:none;
+}
+
+.table-scroll{
+  overflow:auto;
+  margin-top:15px;
+  border:1px solid #d7dee8;
+  border-radius:8px;
+}
+
+
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:700px;
+}
+
+th,
+td{
+  border:1px solid #d7dee8;
+  padding:7px;
+  vertical-align:top;
+}
+
+th{
+  background:#eef3f8;
+  text-align:left;
+  white-space:nowrap;
+}
+
+td.school-name{
+  font-weight:bold;
+  background:#f8fafc;
+  min-width:180px;
+}
+
+td input{
+  min-width:130px;
+  padding:8px;
+}
+
+.actions{
+  margin-top:15px;
+}
+
+#entryArea{
+  margin-top:20px;
+}
+
+@media(max-width:600px){
+
+  .wrap{
+    margin:5px auto;
+    padding:8px;
+  }
+
+  .card{
+    padding:14px;
+    border-radius:10px;
+  }
+
+  h1{
+    font-size:22px;
+  }
+
+  h2{
+    font-size:19px;
+  }
+
+  button{
+    width:100%;
+    margin:4px 0;
+  }
+
+  table{
+    min-width:650px;
+  }
+
+}
+
+@media print {
+
+  @page {
+    size: landscape;
+    margin: 6mm;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #fff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .wrap {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  #createSection {
+    display: none !important;
+  }
+
+  #entryArea {
+    display: block !important;
+    margin: 0 !important;
+  }
+
+  #entryTitle {
+    font-size: 14px !important;
+    margin: 0 0 5px 0 !important;
+  }
+
+  .table-scroll {
+    overflow: visible !important;
+    border: 0 !important;
+    margin: 0 !important;
+  }
+
+  table {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+  }
+
+  th,
+  td {
+    border: 1px solid #000 !important;
+    padding: 2px !important;
+    font-size: 7px !important;
+    line-height: 1.1 !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+    white-space: normal !important;
+    vertical-align: middle !important;
+  }
+
+  th {
+    font-weight: bold !important;
+    text-align: center !important;
+    background: #eee !important;
+  }
+
+  td.school-name {
+    min-width: 0 !important;
+    width: auto !important;
+    font-weight: bold !important;
+    background: #fff !important;
+  }
+
+  td input {
+    width: 100% !important;
+    min-width: 0 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    padding: 1px !important;
+    margin: 0 !important;
+    font-size: 7px !important;
+    line-height: 1.1 !important;
+    background: transparent !important;
+    color: #000 !important;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrap">
+
+<div class="card">
+
+<h1>📋 Information Admin</h1>
+
+<!-- =========================
+     CREATE FORM SECTION
+========================= -->
+
+<div id="createSection">
+
+<label>Admin PIN</label>
+
+<input
+  id="pin"
+  type="password"
+  value="1234"
+  autocomplete="off"
+>
+
+<label>सूचना का नाम</label>
+
+<input
+  id="infoName"
+  placeholder="Teacher Information"
+>
+
+<label>Columns – एक line में एक</label>
+
+<textarea
+  id="columns"
+  rows="7"
+  placeholder="S.No
+Teacher Name
+Designation
+Subject
+Mobile Number"
+></textarea>
+
+<label>Schools – एक line में एक</label>
+
+<textarea
+  id="schools"
+  rows="10"
+  placeholder="School 1
+School 2
+School 3"
+></textarea>
+
+<button
+  class="blue"
+  onclick="createInformation()"
+>
+➕ Create Information
+</button>
+
+<div id="msg"></div>
+
+</div>
+
+
+<!-- =========================
+     ENTRY SECTION
+========================= -->
+
+<div
+  id="entryArea"
+  class="hidden"
+>
+
+<hr>
+
+<h2 id="entryTitle">
+Information Entry
+</h2>
+
+<div class="table-scroll">
+
+<table>
+
+<thead id="tableHead"></thead>
+
+<tbody id="tableBody"></tbody>
+
+</table>
+
+</div>
+
+<div class="actions no-print">
+
+<button
+  class="green"
+  onclick="saveInformation()"
+>
+☁️ Save Information
+</button>
+
+<button
+  class="gray"
+  onclick="window.print()"
+>
+🖨️ Print
+</button>
+
+</div>
+
+<div id="saveMsg"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   GOOGLE APPS SCRIPT API
+   INFORMATION WALA API
+===================================================== */
+
+const API =
+"https://script.google.com/macros/s/AKfycbyHb8abCXCQFAhemdCEcoHEo2gx3JL5eq_-X558SQITZXOiJ_ocCnVymLItAB2m2Pr5/exec";
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let cfg = null;
+
+let formId = "";
+
+let tableData = [];
+
+
+/* =====================================================
+   SHORT ID
+===================================================== */
+
+const $ = id =>
+document.getElementById(id);
+
+
+/* =====================================================
+   SHOW MESSAGE
+===================================================== */
+
+function showMsg(text,type){
+
+  const box = $("msg");
+
+  box.className = "msg " + type;
+
+  box.textContent = text;
+
+}
+
+
+// =====================================================
+// GOOGLE API
+// =====================================================
+
+async function apiCall(params){
+
+  const response = await fetch(API, {
+    method: "POST",
+
+    headers: {
+      "Content-Type":
+        "application/x-www-form-urlencoded;charset=UTF-8"
+    },
+
+    body: new URLSearchParams(params).toString()
+  });
+
+  const text = await response.text();
+
+  console.log("API RESPONSE:", text);
+
+  try {
+
+    return JSON.parse(text);
+
+  } catch(e) {
+
+    throw new Error(
+      "Google API ने valid JSON नहीं भेजा"
+    );
+
+  }
+
+}
+/* =====================================================
+   CREATE INFORMATION
+===================================================== */
+
+async function createInformation(){
+
+  const pin = $("pin").value.trim();
+  const infoName = $("infoName").value.trim();
+  const columns = $("columns").value.trim();
+  const schools = $("schools").value.trim();
+
+  if(!pin){ showMsg("Admin PIN डालें", "err"); return; }
+  if(!infoName){ showMsg("सूचना का नाम डालें", "err"); return; }
+  if(!columns){ showMsg("Columns डालें", "err"); return; }
+  if(!schools){ showMsg("Schools की list डालें", "err"); return; }
+
+  showMsg("Information तैयार की जा रही है...", "loading");
+
+  try{
+
+    const result = await apiCall({
+      action: "createForm",
+      pin: pin,
+      name: infoName,
+      columns: columns,
+      schools: schools
+    });
+
+    console.log("CREATE RESPONSE:", result);
+
+    if(!result || !result.ok){
+      throw new Error(
+        result && result.error
+          ? result.error
+          : "Information create नहीं हुई"
+      );
+    }
+
+    formId = result.formId;
+
+    cfg = {
+      infoName: infoName,
+      columns: columns.split(/\r?\n/).map(x => x.trim()).filter(Boolean),
+      schools: schools.split(/\r?\n/).map(x => x.trim()).filter(Boolean)
+    };
+
+    cfg.columns = [...new Set(cfg.columns)];
+    cfg.schools = [...new Set(cfg.schools)];
+
+    tableData = cfg.schools.map(function(){
+      return Array(cfg.columns.length).fill("");
+    });
+
+    $("entryTitle").textContent = "📋 " + cfg.infoName;
+
+    renderTable();
+
+    $("createSection").classList.add("hidden");
+    $("entryArea").classList.remove("hidden");
+
+    $("saveMsg").className = "msg ok";
+    $("saveMsg").textContent =
+      "✓ Information form तैयार है। अब हर School की row में information भरें।";
+
+  }
+  catch(error){
+
+    console.error(error);
+
+    showMsg(
+      "Google API Connection failed: " + error.message,
+      "err"
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   RENDER TABLE
+===================================================== */
+function renderTable(){
+
+  if(!cfg) return;
+
+  /* HEADER */
+
+  let headerHTML =
+    "<tr>" +
+    "<th>School Name</th>" +
+
+    cfg.columns
+      .map(function(column){
+
+        return (
+          "<th>" +
+          escapeHtml(column) +
+          "</th>"
+        );
+
+      })
+      .join("") +
+
+    "</tr>";
+
+  $("tableHead").innerHTML = headerHTML;
+
+  /* BODY */
+
+  $("tableBody").innerHTML =
+
+    cfg.schools
+      .map(function(school,rowIndex){
+
+        let cells =
+          cfg.columns
+            .map(function(column,colIndex){
+
+              return (
+                "<td>" +
+
+                '<input type="text" ' +
+
+                'value="' +
+                escapeHtml(
+                  tableData[rowIndex][colIndex] || ""
+                ) +
+                '" ' +
+
+                'oninput="updateCell(' +
+                rowIndex +
+                ',' +
+                colIndex +
+                ',this.value)">' +
+
+                "</td>"
+              );
+
+            })
+            .join("");
+
+        return (
+          "<tr>" +
+
+          '<td class="school-name">' +
+          escapeHtml(school) +
+          "</td>" +
+
+          cells +
+
+          "</tr>"
+        );
+
+      })
+      .join("");
+
+}
+
+/* =====================================================
+   UPDATE CELL
+===================================================== */
+
+function updateCell(
+  row,
+  col,
+  value
+){
+
+  tableData[row][col] =
+    value;
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value){
+
+  return String(value)
+    .replace(
+      /[&<>"']/g,
+      function(m){
+
+        return {
+
+          "&":"&amp;",
+          "<":"&lt;",
+          ">":"&gt;",
+          '"':"&quot;",
+          "'":"&#039;"
+
+        }[m];
+
+      }
+    );
+
+}
+
+
+/* =====================================================
+   SAVE INFORMATION
+===================================================== */
+
+async function saveInformation(){
+
+  if(!formId){
+
+    alert(
+      "Form ID नहीं मिला"
+    );
+
+    return;
+
+  }
+
+
+  const pin =
+    $("pin").value.trim();
+
+
+  if(!pin){
+
+    alert(
+      "Admin PIN missing"
+    );
+
+    return;
+
+  }
+
+
+  /* =====================================
+     DATA PREPARE
+  ===================================== */
+
+  const data =
+    cfg.schools.map(function(
+      school,
+      index
+    ){
+
+      return {
+
+        school:school,
+
+        values:
+          tableData[index]
+
+      };
+
+    });
+
+
+  /* =====================================
+     CHECK ANY DATA
+  ===================================== */
+
+  const hasData =
+    tableData.some(function(row){
+
+      return row.some(function(value){
+
+        return String(value).trim() !== "";
+
+      });
+
+    });
+
+
+  if(!hasData){
+
+    alert(
+      "कम से कम एक information भरें"
+    );
+
+    return;
+
+  }
+
+
+  $("saveMsg").className =
+    "msg loading";
+
+
+  $("saveMsg").textContent =
+    "Google Sheet में save हो रहा है...";
+
+
+  try{
+
+    /* =====================================
+   SUBMIT INFORMATION
+===================================== */
+
+const response = await fetch(API, {
+  method: "POST",
+
+  headers: {
+    "Content-Type":
+      "application/x-www-form-urlencoded;charset=UTF-8"
+  },
+
+  body: new URLSearchParams({
+    action: "submitInfo",
+    pin: pin,
+    formId: formId,
+    data: JSON.stringify(data)
+  }).toString()
+});
+
+const result = await response.json();
+
+console.log(
+  "SAVE RESPONSE:",
+  result
+);
+
+if (
+  !result ||
+  !result.ok
+) {
+
+  throw new Error(
+    result && result.error
+      ? result.error
+      : "Save नहीं हुआ"
+  );
+
+}
+
+$("saveMsg").className =
+  "msg ok";
+
+$("saveMsg").textContent =
+  "✓ सभी information Google Sheet में save हो गई। " +
+  result.count +
+  " School की rows save हुईं।";
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    $("saveMsg").className =
+      "msg err";
+
+    $("saveMsg").textContent =
+      "Google API Connection failed: " +
+      error.message;
+
+  }
+
+}
+    
+function printInformation(){
+
+  if(!cfg || !cfg.columns){
+    window.print();
+    return;
+  }
+
+  const columnCount = cfg.columns.length;
+
+  const oldStyle = document.getElementById("dynamicPrintStyle");
+
+  if(oldStyle){
+    oldStyle.remove();
+  }
+
+  const style = document.createElement("style");
+  style.id = "dynamicPrintStyle";
+
+  if(columnCount >= 8){
+
+    style.innerHTML = `
+      @page{
+        size: landscape;
+        margin: 5mm;
+      }
+
+      @media print{
+        th,td{
+          font-size: 6.5px !important;
+          padding: 2px !important;
+        }
+
+        td input{
+          font-size: 6.5px !important;
+        }
+      }
+    `;
+
+  }else{
+
+    style.innerHTML = `
+      @page{
+        size: portrait;
+        margin: 7mm;
+      }
+
+      @media print{
+        th,td{
+          font-size: 9px !important;
+          padding: 3px !important;
+        }
+
+        td input{
+          font-size: 9px !important;
+        }
+      }
+    `;
+
+  }
+
+  document.head.appendChild(style);
+
+  setTimeout(function(){
+
+    window.print();
+
+    setTimeout(function(){
+
+      const s =
+        document.getElementById("dynamicPrintStyle");
+
+      if(s){
+        s.remove();
+      }
+
+    },1000);
+
+  },100);
+
+}
+
+</script>
+
+</body>
+
+</html>
