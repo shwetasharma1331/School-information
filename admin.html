@@ -4,268 +4,225 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>School Information Admin</title>
-
 <style>
-body{
-  font-family:Arial,sans-serif;
-  background:#f4f7fb;
-  margin:0;
-}
-.wrap{
-  max-width:900px;
-  margin:25px auto;
-  padding:15px;
-}
-.card{
-  background:white;
-  border-radius:14px;
-  padding:22px;
-  box-shadow:0 3px 15px #0001;
-}
-label{
-  font-weight:700;
-  display:block;
-  margin:12px 0 6px;
-}
-input,textarea{
-  width:100%;
-  box-sizing:border-box;
-  padding:11px;
-  border:1px solid #cbd5e1;
-  border-radius:8px;
-  font-size:15px;
-}
-button{
-  padding:12px 18px;
-  border:0;
-  border-radius:8px;
-  background:#2563eb;
-  color:white;
-  font-size:15px;
-  cursor:pointer;
-  margin-top:12px;
-}
-button:hover{
-  opacity:.9;
-}
-.msg{
-  margin-top:12px;
-  padding:11px;
-  border-radius:8px;
-  word-break:break-word;
-}
-.ok{
-  background:#ecfdf3;
-  color:#166534;
-}
-.err{
-  background:#fef2f2;
-  color:#991b1b;
-}
-.link{
-  margin-top:10px;
-  padding:12px;
-  background:#f8fafc;
-  border-radius:8px;
-  word-break:break-all;
-}
-.copy{
-  background:#16a34a;
-  margin-left:8px;
-}
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;color:#17202a}
+.wrap{max-width:1000px;margin:20px auto;padding:12px}
+.card{background:#fff;border-radius:14px;padding:22px;box-shadow:0 3px 15px #0001;margin-bottom:16px}
+h1{margin-top:0}
+label{font-weight:700;display:block;margin:12px 0 6px}
+input,textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px}
+button{padding:11px 16px;border:0;border-radius:8px;background:#2563eb;color:#fff;font-size:15px;cursor:pointer;margin:5px 4px 0 0}
+button:hover{opacity:.9}
+.secondary{background:#475569}
+.green{background:#15803d}
+.red{background:#dc2626}
+.gray{background:#64748b}
+.msg{margin-top:12px;padding:11px;border-radius:8px;word-break:break-word}
+.ok{background:#ecfdf3;color:#166534}
+.err{background:#fef2f2;color:#991b1b}
+.hint{font-size:13px;color:#64748b;margin-top:5px}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;margin:8px 0}
+.school-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin:8px 0}
+.check{display:flex;align-items:center;gap:6px;white-space:nowrap;font-size:14px}
+.check input{width:auto}
+.link{margin-top:10px;padding:12px;background:#f8fafc;border-radius:8px;word-break:break-all}
+.badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:4px 8px;border-radius:999px;font-size:12px}
+@media(max-width:650px){.row{grid-template-columns:1fr}.school-row{grid-template-columns:1fr}}
 </style>
 </head>
-
 <body>
-
 <div class="wrap">
-<div class="card">
 
+<div class="card">
 <h1>School Information – Admin</h1>
 
 <label>Admin PIN</label>
 <input id="pin" type="password" value="1234">
 
+<label>Existing Form ID <span class="badge">केवल Edit के लिए</span></label>
+<input id="editId" placeholder="पुराने form की ID यहाँ डालें">
+<div class="hint">नया form बनाना हो तो इसे खाली छोड़ें। पुराने form को बदलना हो तो Form ID डालकर Load करें।</div>
+<button class="secondary" onclick="loadExisting()">✏️ Edit Form Load करें</button>
+
 <label>सूचना का नाम</label>
 <input id="name" placeholder="Teacher Information">
 
-<label>Columns – एक line में एक</label>
-<textarea id="cols" rows="7"
-placeholder="S.No
-Teacher Name
-Designation
-Subject
-Mobile Number"></textarea>
+<label>Columns</label>
+<div id="columns"></div>
+<button class="secondary" onclick="addColumn()">➕ Column जोड़ें</button>
+<div class="hint">हर column के सामने Mandatory (*) लगाएँ। Mandatory column खाली होने पर School page से Submit नहीं होगा।</div>
 
 <label>Schools – एक line में एक</label>
-<textarea id="schools" rows="10"
-placeholder="School 1
-School 2
-School 3"></textarea>
+<textarea id="schools" rows="12" placeholder="GOVT. SCHOOL 1
+GOVT. SCHOOL 2
+GOVT. SCHOOL 3"></textarea>
+<div class="hint">यहाँ जो school names सेव होंगे वही School page पर fixed/selectable रहेंगे और Google Sheet में School Name अपने-आप आएगा।</div>
 
-<button onclick="createForm()">➕ Create School Form</button>
+<label class="check">
+<input id="allowAddRow" type="checkbox">
+School page पर “Add Row” दिखाएँ
+</label>
+<div class="hint">Off रहने पर एक school के लिए केवल 1 row रहेगी। On रहने पर school page पर Add Row दिखाई देगा।</div>
+
+<button class="green" onclick="saveForm()">💾 Save / Create Form</button>
 
 <div id="msg"></div>
 
 <div id="result" style="display:none">
-  <h3>✅ Form तैयार हो गया</h3>
-
-  <div class="link">
-    <b>School Link:</b><br>
-    <span id="schoolLink"></span>
-  </div>
-
-  <button class="copy" onclick="copyLink()">📋 Copy Link</button>
+<h3>✅ Form तैयार है</h3>
+<div class="link">
+<b>Form ID:</b><br><span id="formIdOut"></span><br><br>
+<b>School Link:</b><br><span id="schoolLink"></span>
+</div>
+<button class="green" onclick="copyLink()">📋 Copy Link</button>
+</div>
 </div>
 
+<div class="card">
+<h3>Column सेटिंग का उदाहरण</h3>
+<div class="hint">उदाहरण: Teacher Name = Mandatory, Subject = Optional, Mobile = Mandatory.</div>
 </div>
+
 </div>
 
 <script>
+const API = "https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
+let columnRows = [];
 
-const API =
-"https://script.google.com/macros/s/AKfycby70bOm1aDAkfNwNuOpSA3uZXU2rF5YYKpH1zYIu0J6yiusukebyvmqgmUjdp9n1AQLgg/exec";
-
+const $ = id => document.getElementById(id);
 
 function showMsg(text,type){
-
-  const box=document.getElementById("msg");
-
+  const box=$("msg");
   box.className="msg "+type;
-
   box.innerText=text;
 }
 
-
-function createForm(){
-
-  const pin=document.getElementById("pin").value.trim();
-
-  const name=document.getElementById("name").value.trim();
-
-  const cols=document.getElementById("cols").value.trim();
-
-  const schools=document.getElementById("schools").value.trim();
-
-
-  if(!pin){
-    showMsg("Admin PIN डालें","err");
-    return;
-  }
-
-  if(!name){
-    showMsg("सूचना का नाम डालें","err");
-    return;
-  }
-
-  if(!cols){
-    showMsg("Columns डालें","err");
-    return;
-  }
-
-  if(!schools){
-    showMsg("Schools की list डालें","err");
-    return;
-  }
-
-
-  showMsg("Form बनाया जा रहा है...","ok");
-
-
-  fetch(API, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-  },
-  body: new URLSearchParams({
-    action: "createForm",
-    pin: pin,
-    name: name,
-    columns: cols,
-    schools: schools
-  })
-})
-  .then(response => response.json())
-  .then(data => {
-
-    if(!data.ok){
-
-      showMsg(
-        "Error: " + (data.error || "Unknown error"),
-        "err"
-      );
-
-      return;
-    }
-
-
-    showMsg(
-      "Form successfully create हो गया।",
-      "ok"
-    );
-
-
-    const formId=data.formId;
-
-
-    /*
-      GitHub Pages का current address automatically लिया जाएगा
-      और school.html?form=FORM_ID बनाया जाएगा।
-    */
-
-    const base =
-      window.location.origin +
-      window.location.pathname
-        .replace("admin.html","");
-
-
-    const schoolURL =
-      base +
-      "school.html?form=" +
-      encodeURIComponent(formId);
-
-
-    document.getElementById("schoolLink").innerText =
-      schoolURL;
-
-    document.getElementById("result").style.display =
-      "block";
-
-  })
-  .catch(error => {
-
-    showMsg(
-      "Unable to connect to Google Sheet/API. " +
-      error.message,
-      "err"
-    );
-
-  });
-
+function addColumn(name="", required=false){
+  columnRows.push({name:name, required:!!required});
+  renderColumns();
 }
 
+function removeColumn(i){
+  columnRows.splice(i,1);
+  renderColumns();
+}
+
+function renderColumns(){
+  const box=$("columns");
+  box.innerHTML="";
+  columnRows.forEach((c,i)=>{
+    const div=document.createElement("div");
+    div.className="row";
+    div.innerHTML=`
+      <input placeholder="Column name" value="${esc(c.name)}"
+        oninput="columnRows[${i}].name=this.value">
+      <label class="check">
+        <input type="checkbox" ${c.required?"checked":""}
+          onchange="columnRows[${i}].required=this.checked">
+        Mandatory (*)
+      </label>
+      <button class="red" onclick="removeColumn(${i})">🗑️</button>`;
+    box.appendChild(div);
+  });
+}
+
+function esc(s){
+  return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+
+function getColumns(){
+  return columnRows
+    .map(c=>({name:String(c.name||"").trim(),required:!!c.required}))
+    .filter(c=>c.name);
+}
+
+async function loadExisting(){
+  const pin=$("pin").value.trim();
+  const id=$("editId").value.trim();
+  if(!pin) return showMsg("Admin PIN डालें","err");
+  if(!id) return showMsg("Edit के लिए Form ID डालें","err");
+
+  showMsg("Form load हो रहा है...","ok");
+  try{
+    const r=await api("getForm",{formId:id});
+    if(!r.ok) throw new Error(r.error||"Form नहीं मिला");
+    const f=r.form;
+    $("name").value=f.name||"";
+    $("schools").value=(f.schools||[]).join("\n");
+    $("allowAddRow").checked=!!f.allowAddRow;
+    columnRows=(f.columns||[]).map(c=>{
+      if(typeof c==="string") return {name:c,required:false};
+      return {name:c.name||"",required:!!c.required};
+    });
+    renderColumns();
+    showMsg("Form settings load हो गईं। अब बदलाव करके Save करें।","ok");
+  }catch(e){
+    showMsg("Error: "+e.message,"err");
+  }
+}
+
+async function saveForm(){
+  const pin=$("pin").value.trim();
+  const editId=$("editId").value.trim();
+  const name=$("name").value.trim();
+  const schools=$("schools").value.trim();
+  const columns=getColumns();
+
+  if(!pin) return showMsg("Admin PIN डालें","err");
+  if(!name) return showMsg("सूचना का नाम डालें","err");
+  if(!columns.length) return showMsg("कम से कम एक column डालें","err");
+  if(!schools) return showMsg("Schools की list डालें","err");
+
+  showMsg(editId ? "Form update हो रहा है..." : "Form बनाया जा रहा है...","ok");
+
+  try{
+    const r=await api(editId ? "updateForm" : "createForm", {
+      pin:pin,
+      formId:editId,
+      name:name,
+      columns:JSON.stringify(columns),
+      schools:schools,
+      allowAddRow:$("allowAddRow").checked ? "true" : "false"
+    });
+    if(!r.ok) throw new Error(r.error||"Save नहीं हुआ");
+
+    const id=r.formId||editId;
+    $("editId").value=id;
+    $("formIdOut").innerText=id;
+
+    const base=window.location.origin+
+      window.location.pathname.replace("admin.html","");
+    const url=base+"school.html?form="+encodeURIComponent(id);
+    $("schoolLink").innerText=url;
+    $("result").style.display="block";
+    showMsg(editId ? "✓ Form successfully update हो गया।" : "✓ Form successfully create हो गया।","ok");
+  }catch(e){
+    showMsg("Error: "+e.message,"err");
+  }
+}
+
+async function api(action,params={}){
+  const body=new URLSearchParams({action,...params});
+  const response=await fetch(API,{
+    method:"POST",
+    headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+    body
+  });
+  const text=await response.text();
+  let data;
+  try{data=JSON.parse(text)}catch(e){throw new Error("Google API का response JSON नहीं है")}
+  if(!data.ok) throw new Error(data.error||"Google API error");
+  return data;
+}
 
 function copyLink(){
-
-  const link =
-    document.getElementById("schoolLink").innerText;
-
-
-  navigator.clipboard.writeText(link)
-  .then(() => {
-
-    alert("School Link copy हो गया ✅");
-
-  })
-  .catch(() => {
-
-    alert("Link copy नहीं हुआ। Manually select करके copy करें।");
-
-  });
-
+  const link=$("schoolLink").innerText;
+  navigator.clipboard.writeText(link).then(()=>alert("School Link copy हो गया ✅"));
 }
 
+addColumn("Teacher Name",true);
+addColumn("Designation",false);
 </script>
-
 </body>
 </html>
