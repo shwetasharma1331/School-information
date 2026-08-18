@@ -471,18 +471,42 @@ function esc(value){
 
 function normalizeColumns(columns){
 
+  /* -----------------------------------------
+     Case 1:
+     पूरा columns JSON string है
+     ----------------------------------------- */
+
   if(typeof columns === "string"){
+
+    const text = columns.trim();
+
+    if(!text){
+
+      return [];
+
+    }
 
     try{
 
-      columns =
-        JSON.parse(columns);
+      const parsed =
+        JSON.parse(text);
+
+      if(Array.isArray(parsed)){
+
+        columns = parsed;
+
+      }
+      else{
+
+        columns = [parsed];
+
+      }
 
     }
     catch(e){
 
       columns =
-        columns
+        text
           .split("\n")
           .map(x => x.trim())
           .filter(Boolean);
@@ -492,6 +516,10 @@ function normalizeColumns(columns){
   }
 
 
+  /* -----------------------------------------
+     Array नहीं है
+     ----------------------------------------- */
+
   if(!Array.isArray(columns)){
 
     return [];
@@ -499,16 +527,107 @@ function normalizeColumns(columns){
   }
 
 
+  /* -----------------------------------------
+     सबसे जरूरी FIX
+
+     Apps Script में अभी यह आ रहा है:
+
+     [
+       '[{"name":"Teacher Name","required":true},
+        {"name":"xdvxd","required":false}]'
+     ]
+
+     इसलिए Array के अंदर मौजूद JSON को
+     दोबारा parse करेंगे।
+     ----------------------------------------- */
+
+  if(
+    columns.length === 1 &&
+    typeof columns[0] === "string"
+  ){
+
+    const first =
+      columns[0].trim();
+
+    if(
+      first.startsWith("[") &&
+      first.endsWith("]")
+    ){
+
+      try{
+
+        const parsed =
+          JSON.parse(first);
+
+        if(Array.isArray(parsed)){
+
+          columns = parsed;
+
+        }
+
+      }
+      catch(e){
+
+        console.log(
+          "Nested column JSON parse error",
+          e
+        );
+
+      }
+
+    }
+
+  }
+
+
+  /* -----------------------------------------
+     अब हर column को standard format में बदलें
+     ----------------------------------------- */
+
   return columns
     .map(function(c){
 
-      /* पुराना format */
+      /* पुराना simple string format */
 
       if(typeof c === "string"){
 
+        const text =
+          c.trim();
+
+        /* अगर individual item भी JSON है */
+
+        if(
+          text.startsWith("{") &&
+          text.endsWith("}")
+        ){
+
+          try{
+
+            const obj =
+              JSON.parse(text);
+
+            return {
+
+              name:String(
+                obj.name ?? ""
+              ).trim(),
+
+              required:
+                Boolean(
+                  obj.required
+                )
+
+            };
+
+          }
+          catch(e){}
+
+        }
+
+
         return {
 
-          name:c.trim(),
+          name:text,
 
           required:false
 
@@ -517,7 +636,7 @@ function normalizeColumns(columns){
       }
 
 
-      /* नया format */
+      /* नया object format */
 
       return {
 
@@ -526,16 +645,20 @@ function normalizeColumns(columns){
         ).trim(),
 
         required:
-          Boolean(
-            c?.required
-          )
+          c?.required === true ||
+          c?.required === "true" ||
+          c?.required === 1 ||
+          c?.required === "1"
 
       };
 
     })
-    .filter(
-      c => c.name
-    );
+
+    .filter(function(c){
+
+      return c.name !== "";
+
+    });
 
 }
 
