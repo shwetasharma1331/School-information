@@ -12,10 +12,10 @@
 }
 
 body{
-  font-family:Arial,sans-serif;
-  background:#f4f7fb;
   margin:0;
+  background:#f4f7fb;
   color:#17202a;
+  font-family:Arial,sans-serif;
 }
 
 .wrap{
@@ -27,81 +27,77 @@ body{
 .card{
   background:#fff;
   border-radius:14px;
-  padding:20px;
+  padding:22px;
   box-shadow:0 3px 15px #0001;
 }
 
 h1{
-  margin-top:0;
-  font-size:28px;
+  margin:0 0 18px;
+  font-size:27px;
 }
 
 h2{
+  margin:18px 0 12px;
   font-size:21px;
-  margin:14px 0;
 }
 
 label{
-  font-weight:700;
   display:block;
+  font-weight:700;
   margin:10px 0 6px;
 }
 
-/* SCHOOL SELECT */
-
-.school-fixed{
-  padding:12px;
-  background:#f8fafc;
-  border:1px solid #d7dee8;
-  border-radius:8px;
-  font-weight:700;
-  margin-bottom:8px;
-}
-
-#school{
+select{
   width:100%;
   padding:12px;
   border:1px solid #cbd5e1;
   border-radius:8px;
   font-size:15px;
-  background:#fff;
+  background:white;
 }
 
-/* TABLE */
+/* Selected school */
+.school-fixed{
+  margin-top:10px;
+  padding:12px;
+  border:1px solid #bfdbfe;
+  background:#eff6ff;
+  border-radius:8px;
+  font-weight:700;
+  color:#1e3a8a;
+}
 
-.table-wrap{
+/* TABLE SCROLL */
+.table-scroll{
   width:100%;
   overflow-x:auto;
+  overflow-y:hidden;
   border:1px solid #cbd5e1;
-  border-radius:10px;
-  background:#fff;
-  margin-top:12px;
+  border-radius:8px;
+  -webkit-overflow-scrolling:touch;
 }
 
+/* Table */
 table{
   border-collapse:collapse;
   width:max-content;
   min-width:100%;
 }
 
-th,
-td{
-  border:1px solid #cbd5e1;
-  padding:8px;
-  vertical-align:middle;
-}
-
 th{
   background:#eef3f8;
+  border:1px solid #cbd5e1;
+  padding:10px;
+  min-width:170px;
   text-align:left;
   font-size:15px;
-  line-height:1.3;
-  min-width:170px;
   white-space:normal;
   word-break:break-word;
 }
 
 td{
+  border:1px solid #cbd5e1;
+  padding:7px;
   min-width:170px;
   background:#fff;
 }
@@ -114,23 +110,24 @@ td input{
   border:1px solid #cbd5e1;
   border-radius:7px;
   font-size:15px;
-  outline:none;
 }
 
 td input:focus{
+  outline:none;
   border-color:#2563eb;
   box-shadow:0 0 0 2px #2563eb22;
 }
 
+/* Mandatory */
 .required-head::after{
   content:" *";
   color:#dc2626;
+  font-weight:bold;
 }
 
-/* BUTTONS */
-
+/* Buttons */
 .btn{
-  padding:10px 15px;
+  padding:11px 16px;
   border:0;
   border-radius:8px;
   margin:8px 5px 0 0;
@@ -158,12 +155,16 @@ td input:focus{
   color:#fff;
 }
 
-/* MESSAGE */
+.hidden{
+  display:none !important;
+}
 
+/* Messages */
 .msg{
-  padding:10px;
+  padding:11px;
   margin-top:12px;
   border-radius:8px;
+  word-break:break-word;
 }
 
 .ok{
@@ -181,22 +182,14 @@ td input:focus{
   color:#1d4ed8;
 }
 
-.hidden{
-  display:none !important;
+.hint{
+  font-size:13px;
+  color:#64748b;
+  margin:7px 0;
 }
 
-.info{
-  padding:10px;
-  background:#eff6ff;
-  color:#1e40af;
-  border-radius:8px;
-  margin:10px 0;
-  font-size:14px;
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
+/* Mobile */
+@media(max-width:650px){
 
   .wrap{
     margin:5px auto;
@@ -220,31 +213,24 @@ td input:focus{
     padding:10px 13px;
   }
 
-  th{
-    min-width:150px;
-  }
-
+  th,
   td{
-    min-width:150px;
+    min-width:160px;
   }
 
   td input{
-    min-width:130px;
+    min-width:145px;
   }
 }
 
-/* PRINT */
-
+/* Print */
 @media print{
 
   .no-print{
     display:none !important;
   }
 
-  html,
   body{
-    margin:0 !important;
-    padding:0 !important;
     background:#fff !important;
   }
 
@@ -257,7 +243,7 @@ td input:focus{
     box-shadow:none !important;
   }
 
-  .table-wrap{
+  .table-scroll{
     overflow:visible !important;
     border:0 !important;
   }
@@ -270,9 +256,9 @@ td input:focus{
 
   th,
   td{
-    padding:3px !important;
-    font-size:8px !important;
-    word-break:break-word !important;
+    min-width:0 !important;
+    padding:4px !important;
+    font-size:9px !important;
   }
 
   td input{
@@ -280,12 +266,11 @@ td input:focus{
     height:auto !important;
     padding:2px !important;
     border:0 !important;
-    font-size:8px !important;
+    font-size:9px !important;
   }
 }
 </style>
 </head>
-
 
 <body>
 
@@ -297,28 +282,22 @@ td input:focus{
 
 <label>School Name</label>
 
-<div id="schoolFixed" class="school-fixed">
-School select करें
-</div>
-
 <select id="school">
   <option value="">-- अपना School Select करें --</option>
 </select>
 
+<div id="schoolFixed" class="school-fixed hidden"></div>
 
 <div id="area" class="hidden">
 
 <h2 id="schoolTitle"></h2>
 
-<div class="info">
-Admin में बनाए गए Columns के अनुसार जानकारी भरें।
-<span id="mandatoryText"></span>
+<div class="hint">
+  <span style="color:#dc2626;font-weight:bold">*</span>
+  वाले Column की जानकारी भरना अनिवार्य है।
 </div>
 
-
-<!-- TABLE -->
-
-<div class="table-wrap">
+<div class="table-scroll">
 
 <table>
 
@@ -330,26 +309,25 @@ Admin में बनाए गए Columns के अनुसार जान�
 
 </div>
 
-
-<!-- BUTTONS -->
-
 <div class="no-print">
 
 <button
-id="addRowBtn"
-class="btn blue hidden"
-onclick="addRow()">
-➕ Add Row
+  id="addRowBtn"
+  type="button"
+  class="btn blue hidden"
+  onclick="addRow()">
+  ➕ Add Row
 </button>
 
 <button
-class="btn green"
-onclick="submitForm()">
-☁️ Submit
+  id="submitBtn"
+  type="button"
+  class="btn green"
+  onclick="submitForm()">
+  ☁️ Submit
 </button>
 
 </div>
-
 
 <div id="msg"></div>
 
@@ -362,46 +340,52 @@ onclick="submitForm()">
 
 <script>
 
-/* =========================
-   GOOGLE APPS SCRIPT API
-========================= */
+/* =========================================================
+   APPS SCRIPT API
+========================================================= */
 
 const API =
-"https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCk_CkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
+"https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
 
 
-/* =========================
+/* =========================================================
    FORM ID
-========================= */
+========================================================= */
 
 const formId =
-new URLSearchParams(window.location.search).get("form");
+new URLSearchParams(
+  window.location.search
+).get("form");
 
 
-/* =========================
-   VARIABLES
-========================= */
+/* =========================================================
+   GLOBAL
+========================================================= */
 
 let cfg = null;
+
 let rows = [];
 
 
-/* =========================
-   GET ELEMENT
-========================= */
+/* =========================================================
+   ELEMENT
+========================================================= */
 
-const $ = id =>
-document.getElementById(id);
+function $(id){
+
+  return document.getElementById(id);
+
+}
 
 
-/* =========================
-   ESCAPE HTML
-========================= */
+/* =========================================================
+   ESCAPE
+========================================================= */
 
 function esc(value){
 
   return String(value ?? "")
-    .replace(/[&<>"']/g, function(m){
+    .replace(/[&<>"']/g,function(m){
 
       return {
         "&":"&amp;",
@@ -409,7 +393,6 @@ function esc(value){
         ">":"&gt;",
         '"':"&quot;",
         "'":"&#039;"
-
       }[m];
 
     });
@@ -417,86 +400,128 @@ function esc(value){
 }
 
 
-/* =========================
-   NORMALIZE COLUMNS
-   IMPORTANT FIX
-========================= */
+/* =========================================================
+   JSON PARSER
+========================================================= */
 
-function normalizeColumns(columns){
+function parseJSON(value, fallback){
 
-  /*
-     Admin से columns कई बार
-     JSON STRING के रूप में आता है।
+  if(
+    value === null ||
+    value === undefined
+  ){
 
-     Example:
+    return fallback;
 
-     "[{\"name\":\"Teacher Name\",\"required\":true}]"
-
-     इसलिए पहले JSON.parse करेंगे।
-  */
-
-  let data = columns;
+  }
 
 
-  /* अगर string है तो parse करो */
+  if(Array.isArray(value)){
 
-  if(typeof data === "string"){
+    return value;
 
-    let temp = data.trim();
+  }
 
-    if(!temp){
-      return [];
+
+  if(
+    typeof value === "object"
+  ){
+
+    return value;
+
+  }
+
+
+  if(
+    typeof value === "string"
+  ){
+
+    let text =
+      value.trim();
+
+
+    if(!text){
+
+      return fallback;
+
     }
+
 
     try{
 
-      data = JSON.parse(temp);
+      return JSON.parse(text);
 
     }catch(e){
 
-      console.error(
-        "Columns JSON parse error:",
-        e
-      );
-
-      return [];
+      return fallback;
 
     }
 
   }
 
 
-  /*
-     कभी-कभी nested JSON आ सकता है।
-  */
+  return fallback;
 
-  if(typeof data === "string"){
+}
 
-    try{
 
-      data = JSON.parse(data);
+/* =========================================================
+   BOOLEAN
+========================================================= */
 
-    }catch(e){
+function bool(value){
 
-      return [];
+  if(value === true){
 
-    }
+    return true;
 
   }
 
 
-  if(!Array.isArray(data)){
+  if(value === 1){
+
+    return true;
+
+  }
+
+
+  const x =
+    String(value ?? "")
+      .trim()
+      .toLowerCase();
+
+
+  return (
+    x === "true" ||
+    x === "1" ||
+    x === "yes" ||
+    x === "on"
+  );
+
+}
+
+
+/* =========================================================
+   COLUMNS NORMALIZE
+========================================================= */
+
+function normalizeColumns(value){
+
+  let list =
+    parseJSON(value,[]);
+
+
+  if(!Array.isArray(list)){
+
     return [];
+
   }
 
 
-  /*
-     हर column को standard format में बदलना
-  */
-
-  return data
-
+  return list
     .map(function(c){
+
+      /* पुराने format में string */
 
       if(typeof c === "string"){
 
@@ -508,51 +533,112 @@ function normalizeColumns(columns){
       }
 
 
-      return {
+      /* नया Admin format */
 
-        name:String(c?.name || "").trim(),
+      if(
+        c &&
+        typeof c === "object"
+      ){
 
-        required:
-          c?.required === true ||
-          c?.required === "true" ||
-          c?.required === 1 ||
-          c?.required === "1"
+        return {
+          name:String(
+            c.name || ""
+          ).trim(),
 
-      };
+          required:bool(
+            c.required
+          )
+        };
+
+      }
+
+
+      return null;
 
     })
 
     .filter(function(c){
 
-      return c.name !== "";
+      return c && c.name;
 
     });
 
 }
 
 
-/* =========================
-   BOOLEAN FIX
-========================= */
+/* =========================================================
+   SCHOOLS NORMALIZE
+========================================================= */
 
-function toBool(value){
+function normalizeSchools(value){
 
-  return (
-    value === true ||
-    value === "true" ||
-    value === "TRUE" ||
-    value === 1 ||
-    value === "1"
-  );
+  let list =
+    parseJSON(value,[]);
+
+
+  /* अगर array है */
+
+  if(Array.isArray(list)){
+
+    return list
+      .map(function(x){
+
+        if(typeof x === "string"){
+
+          return x.trim();
+
+        }
+
+
+        if(
+          x &&
+          typeof x === "object"
+        ){
+
+          return String(
+            x.name || ""
+          ).trim();
+
+        }
+
+
+        return "";
+
+      })
+      .filter(Boolean);
+
+  }
+
+
+  /* अगर newline string है */
+
+  if(typeof value === "string"){
+
+    return value
+      .split(/\r?\n/)
+      .map(function(x){
+
+        return x.trim();
+
+      })
+      .filter(Boolean);
+
+  }
+
+
+  return [];
 
 }
 
 
-/* =========================
+/* =========================================================
    API CALL
-========================= */
+========================================================= */
 
-async function apiCall(action, params={}){
+async function apiCall(
+  action,
+  params={}
+){
 
   let url =
     API +
@@ -560,23 +646,29 @@ async function apiCall(action, params={}){
     encodeURIComponent(action);
 
 
-  Object.keys(params).forEach(function(k){
+  Object.keys(params)
+    .forEach(function(key){
 
-    url +=
-      "&" +
-      encodeURIComponent(k) +
-      "=" +
-      encodeURIComponent(params[k]);
+      url +=
+        "&" +
+        encodeURIComponent(key) +
+        "=" +
+        encodeURIComponent(
+          params[key]
+        );
 
-  });
+    });
 
 
   const response =
-    await fetch(url,{
-      method:"GET",
-      redirect:"follow",
-      cache:"no-store"
-    });
+    await fetch(
+      url,
+      {
+        method:"GET",
+        redirect:"follow",
+        cache:"no-store"
+      }
+    );
 
 
   const text =
@@ -588,23 +680,18 @@ async function apiCall(action, params={}){
 
   try{
 
-    data = JSON.parse(text);
+    data =
+      JSON.parse(text);
 
   }catch(e){
 
-    console.log(text);
+    console.log(
+      "API RESPONSE:",
+      text
+    );
 
     throw new Error(
       "Google API का response JSON नहीं है"
-    );
-
-  }
-
-
-  if(data && data.ok === false){
-
-    throw new Error(
-      data.error || "Google API error"
     );
 
   }
@@ -615,9 +702,9 @@ async function apiCall(action, params={}){
 }
 
 
-/* =========================
+/* =========================================================
    LOAD FORM
-========================= */
+========================================================= */
 
 async function load(){
 
@@ -630,16 +717,18 @@ async function load(){
 
   try{
 
+    /* Form ID */
+
     if(!formId){
 
       throw new Error(
-        "Form link में form ID नहीं है"
+        "Form link में Form ID नहीं है"
       );
 
     }
 
 
-    /* GET FORM */
+    /* API */
 
     const data =
       await apiCall(
@@ -650,197 +739,241 @@ async function load(){
       );
 
 
-    if(
-      !data ||
-      !data.ok ||
-      !data.form
-    ){
+    console.log(
+      "FORM RESPONSE:",
+      data
+    );
+
+
+    if(!data){
 
       throw new Error(
-        data?.error ||
+        "Google API से response नहीं आया"
+      );
+
+    }
+
+
+    if(data.ok === false){
+
+      throw new Error(
+        data.error ||
         "Form नहीं मिला"
       );
 
     }
 
 
-    cfg = data.form;
+    if(!data.form){
+
+      throw new Error(
+        "Form information नहीं मिली"
+      );
+
+    }
 
 
-    /* =====================
+    /* =====================================================
+       CONFIG
+    ===================================================== */
+
+    cfg =
+      data.form;
+
+
+    /* =====================================================
        FORM NAME
-    ===================== */
+    ===================================================== */
 
     $("title").textContent =
       cfg.name ||
       "School Information";
 
 
-    /* =====================
-       COLUMNS FIX
-    ===================== */
+    /* =====================================================
+       COLUMNS
+    ===================================================== */
 
     cfg.columns =
-      normalizeColumns(cfg.columns);
-
-
-    console.log(
-      "FINAL COLUMNS:",
-      cfg.columns
-    );
-
-
-    if(!cfg.columns.length){
-
-      throw new Error(
-        "Admin Form में कोई Column नहीं मिला।"
+      normalizeColumns(
+        cfg.columns
       );
 
-    }
-
-
-    /* =====================
-       SCHOOL LIST
-    ===================== */
 
     if(
-      !Array.isArray(cfg.schools) ||
-      !cfg.schools.length
+      !cfg.columns ||
+      cfg.columns.length === 0
     ){
 
       throw new Error(
-        "इस Form में कोई School नहीं है"
+        "Admin में कोई Column नहीं मिला"
       );
 
     }
 
 
-    /* =====================
-       SCHOOL DROPDOWN
-    ===================== */
+    /* =====================================================
+       SCHOOL LIST
+    ===================================================== */
 
-    const school =
-      $("school");
-
-
-    school.innerHTML =
-      '<option value="">-- अपना School Select करें --</option>' +
-
-      cfg.schools
-        .map(function(s){
-
-          return (
-            '<option value="' +
-            esc(s) +
-            '">' +
-            esc(s) +
-            '</option>'
-          );
-
-        })
-        .join("");
+    cfg.schools =
+      normalizeSchools(
+        cfg.schools
+      );
 
 
-    /* =====================
-       ADD ROW SETTING
-    ===================== */
+    if(
+      !cfg.schools ||
+      cfg.schools.length === 0
+    ){
 
-    const allowAdd =
-      toBool(cfg.allowAddRow);
-
-
-    console.log(
-      "allowAddRow:",
-      cfg.allowAddRow,
-      "=>",
-      allowAdd
-    );
-
-
-    if(allowAdd){
-
-      $("addRowBtn")
-        .classList.remove("hidden");
-
-    }else{
-
-      $("addRowBtn")
-        .classList.add("hidden");
+      throw new Error(
+        "Admin में कोई School नहीं मिला"
+      );
 
     }
 
 
-    /* =====================
-       SCHOOL CHANGE
-    ===================== */
+    /* =====================================================
+       ADD ROW
+    ===================================================== */
 
-    school.onchange =
+    cfg.allowAddRow =
+      bool(
+        cfg.allowAddRow
+      );
+
+
+    console.log(
+      "FINAL CONFIG:",
+      cfg
+    );
+
+
+    /* =====================================================
+       SCHOOL DROPDOWN
+    ===================================================== */
+
+    const select =
+      $("school");
+
+
+    select.innerHTML =
+      "";
+
+
+    const first =
+      document.createElement(
+        "option"
+      );
+
+    first.value = "";
+
+    first.textContent =
+      "-- अपना School Select करें --";
+
+    select.appendChild(first);
+
+
+    cfg.schools.forEach(
+      function(schoolName){
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+        option.value =
+          schoolName;
+
+        option.textContent =
+          schoolName;
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       SCHOOL CHANGE
+    ===================================================== */
+
+    select.onchange =
       function(){
 
-        if(!this.value){
+        const schoolName =
+          this.value.trim();
+
+
+        if(!schoolName){
 
           $("area")
-            .classList.add("hidden");
+            .classList
+            .add("hidden");
 
           $("schoolFixed")
-            .textContent =
-            "School select करें";
+            .classList
+            .add("hidden");
 
           return;
 
         }
 
 
-        const selected =
-          this.value;
-
+        /* School name */
 
         $("schoolFixed")
           .textContent =
-          selected;
+          schoolName;
+
+
+        $("schoolFixed")
+          .classList
+          .remove("hidden");
 
 
         $("schoolTitle")
           .textContent =
-          selected;
+          schoolName;
 
 
-        /*
-           First row create
-        */
+        /* First row */
 
         rows = [
-
           Array(
             cfg.columns.length
           ).fill("")
-
         ];
 
 
         render();
 
 
-        /*
-           Add Row setting फिर से
-           apply करना
-        */
+        /* =================================================
+           ADD ROW BUTTON
+        ================================================= */
 
-        if(toBool(cfg.allowAddRow)){
+        if(cfg.allowAddRow){
 
           $("addRowBtn")
-            .classList.remove("hidden");
+            .classList
+            .remove("hidden");
 
         }else{
 
           $("addRowBtn")
-            .classList.add("hidden");
+            .classList
+            .add("hidden");
 
         }
 
 
         $("area")
-          .classList.remove("hidden");
+          .classList
+          .remove("hidden");
 
 
         $("msg").className = "";
@@ -850,6 +983,8 @@ async function load(){
       };
 
 
+    /* Success */
+
     $("msg").className =
       "msg ok";
 
@@ -857,9 +992,12 @@ async function load(){
       "✓ Form और School List load हो गई।";
 
 
-  }catch(e){
+  }catch(error){
 
-    console.error(e);
+    console.error(
+      "LOAD ERROR:",
+      error
+    );
 
 
     $("title").textContent =
@@ -871,134 +1009,120 @@ async function load(){
 
 
     $("msg").textContent =
-      "Error: " + e.message;
+      "Error: " +
+      error.message;
 
   }
 
 }
 
 
-/* =========================
-   RENDER TABLE
-========================= */
+/* =========================================================
+   RENDER
+========================================================= */
 
 function render(){
 
-  if(!cfg) return;
+  if(!cfg){
+
+    return;
+
+  }
 
 
-  /*
-     HEAD
-  */
+  /* =======================================================
+     HEADER
+  ======================================================= */
 
-  let headHTML = "<tr>";
+  let header =
+    "<tr>";
 
 
   cfg.columns.forEach(
-    function(c){
+    function(col){
 
-      const col =
-        typeof c === "string"
-
-        ? {
-            name:c,
-            required:false
-          }
-
-        : c;
-
-
-      headHTML +=
-
-        '<th class="' +
+      header +=
+        "<th class='" +
         (
           col.required
           ? "required-head"
           : ""
         ) +
-        '">' +
+        "'>" +
 
         esc(col.name) +
 
-        '</th>';
+        "</th>";
 
     }
   );
 
 
-  /*
-     Delete column
-  */
+  /* Delete केवल Add Row ON होने पर */
 
-  headHTML +=
-    '<th class="no-print" style="min-width:90px">Delete</th>';
+  if(cfg.allowAddRow){
+
+    header +=
+      "<th " +
+      "class='no-print' " +
+      "style='min-width:100px'>" +
+      "Delete" +
+      "</th>";
+
+  }
 
 
-  headHTML += "</tr>";
+  header +=
+    "</tr>";
 
 
   $("head").innerHTML =
-    headHTML;
+    header;
 
 
-  /*
+  /* =======================================================
      BODY
-  */
+  ======================================================= */
 
-  let bodyHTML = "";
+  let body = "";
 
 
   rows.forEach(
-    function(row,i){
+    function(row,rowIndex){
 
-      bodyHTML += "<tr>";
+      body += "<tr>";
 
 
       cfg.columns.forEach(
-        function(c,j){
-
-          const col =
-            typeof c === "string"
-
-            ? {
-                name:c,
-                required:false
-              }
-
-            : c;
-
+        function(col,colIndex){
 
           const value =
-            row[j] || "";
+            row[colIndex] ?? "";
 
 
-          bodyHTML +=
-
+          body +=
             "<td>" +
 
-            '<input ' +
+            "<input " +
 
-            'type="text" ' +
+            "type='text' " +
 
-            'value="' +
+            "value='" +
             esc(value) +
-            '" ' +
+            "' " +
 
             (
               col.required
-              ? "required"
+              ? "required "
               : ""
             ) +
 
-            ' placeholder="' +
-            esc(col.name) +
-            '" ' +
-
-            'oninput="updateCell(' +
-            i +
-            ',' +
-            j +
-            ',this.value)"' +
+            "oninput=\"" +
+            "updateCell(" +
+            rowIndex +
+            "," +
+            colIndex +
+            ",this.value)" +
 
             ">" +
 
@@ -1008,60 +1132,75 @@ function render(){
       );
 
 
-      bodyHTML +=
+      /* Delete */
 
-        '<td class="no-print">' +
+      if(cfg.allowAddRow){
 
-        '<button ' +
+        body +=
+          "<td class='no-print'>" +
 
-        'type="button" ' +
+          "<button " +
+          "type='button' " +
+          "class='btn red' " +
+          "onclick='delRow(" +
+          rowIndex +
+          ")'>" +
 
-        'class="btn red" ' +
+          "🗑️ Delete" +
 
-        'onclick="delRow(' +
-        i +
-        ')"' +
+          "</button>" +
 
-        '>🗑️</button>' +
+          "</td>";
 
-        '</td>';
+      }
 
 
-      bodyHTML += "</tr>";
+      body +=
+        "</tr>";
 
     }
   );
 
 
   $("body").innerHTML =
-    bodyHTML;
+    body;
 
 }
 
 
-/* =========================
+/* =========================================================
    UPDATE CELL
-========================= */
+========================================================= */
 
-function updateCell(i,j,value){
+function updateCell(
+  rowIndex,
+  colIndex,
+  value
+){
 
-  if(!rows[i]) return;
+  if(!rows[rowIndex]){
 
-  rows[i][j] = value;
+    return;
+
+  }
+
+
+  rows[rowIndex][colIndex] =
+    value;
 
 }
 
 
-/* =========================
+/* =========================================================
    ADD ROW
-========================= */
+========================================================= */
 
 function addRow(){
 
-  if(!cfg) return;
-
-
-  if(!toBool(cfg.allowAddRow)){
+  if(
+    !cfg ||
+    !cfg.allowAddRow
+  ){
 
     return;
 
@@ -1069,11 +1208,9 @@ function addRow(){
 
 
   rows.push(
-
     Array(
       cfg.columns.length
     ).fill("")
-
   );
 
 
@@ -1082,15 +1219,25 @@ function addRow(){
 }
 
 
-/* =========================
+/* =========================================================
    DELETE ROW
-========================= */
+========================================================= */
 
-function delRow(i){
+function delRow(index){
+
+  if(!cfg.allowAddRow){
+
+    return;
+
+  }
+
 
   if(rows.length > 1){
 
-    rows.splice(i,1);
+    rows.splice(
+      index,
+      1
+    );
 
   }else{
 
@@ -1107,9 +1254,9 @@ function delRow(i){
 }
 
 
-/* =========================
-   REQUIRED VALIDATION
-========================= */
+/* =========================================================
+   VALIDATE MANDATORY
+========================================================= */
 
 function validateRequired(){
 
@@ -1117,24 +1264,23 @@ function validateRequired(){
 
 
   rows.forEach(
-    function(row,i){
+    function(row,rowIndex){
 
-      /*
-         अगर पूरी row खाली है
-         तो उसे skip करो
-      */
+      const hasData =
+        row.some(
+          function(value){
 
-      const hasAny =
-        row.some(function(v){
+            return String(
+              value ?? ""
+            ).trim() !== "";
 
-          return String(
-            v ?? ""
-          ).trim() !== "";
-
-        });
+          }
+        );
 
 
-      if(!hasAny){
+      /* खाली row को skip */
+
+      if(!hasData){
 
         return;
 
@@ -1142,34 +1288,21 @@ function validateRequired(){
 
 
       cfg.columns.forEach(
-        function(c,j){
-
-          const col =
-            typeof c === "string"
-
-            ? {
-                name:c,
-                required:false
-              }
-
-            : c;
-
+        function(col,colIndex){
 
           if(
             col.required &&
             String(
-              row[j] ?? ""
+              row[colIndex] ?? ""
             ).trim() === ""
           ){
 
             errors.push(
-
               "Row " +
-              (i+1) +
+              (rowIndex + 1) +
               " में '" +
               col.name +
               "' भरना जरूरी है"
-
             );
 
           }
@@ -1186,14 +1319,16 @@ function validateRequired(){
 }
 
 
-/* =========================
+/* =========================================================
    SUBMIT
-========================= */
+========================================================= */
 
 async function submitForm(){
 
   const school =
-    $("school").value;
+    $("school")
+      .value
+      .trim();
 
 
   if(!school){
@@ -1207,24 +1342,24 @@ async function submitForm(){
   }
 
 
-  /*
-     Empty rows remove
-  */
+  /* Filled rows */
 
   const data =
-    rows.filter(function(row){
+    rows.filter(
+      function(row){
 
-      return row.some(
-        function(v){
+        return row.some(
+          function(value){
 
-          return String(
-            v ?? ""
-          ).trim() !== "";
+            return String(
+              value ?? ""
+            ).trim() !== "";
 
-        }
-      );
+          }
+        );
 
-    });
+      }
+    );
 
 
   if(!data.length){
@@ -1238,9 +1373,7 @@ async function submitForm(){
   }
 
 
-  /*
-     Mandatory validation
-  */
+  /* Mandatory */
 
   const errors =
     validateRequired();
@@ -1263,9 +1396,12 @@ async function submitForm(){
     $("msg").className =
       "msg loading";
 
-
     $("msg").textContent =
       "Google Sheet में save हो रहा है...";
+
+
+    $("submitBtn").disabled =
+      true;
 
 
     const result =
@@ -1273,9 +1409,7 @@ async function submitForm(){
         "submit",
         {
           formId:formId,
-
           school:school,
-
           rows:JSON.stringify(data)
         }
       );
@@ -1283,7 +1417,7 @@ async function submitForm(){
 
     if(
       !result ||
-      !result.ok
+      result.ok === false
     ){
 
       throw new Error(
@@ -1300,30 +1434,31 @@ async function submitForm(){
 
     $("msg").textContent =
       "✓ " +
-      (result.count || data.length) +
+      (
+        result.count ??
+        data.length
+      ) +
       " row Google Sheet में save हो गई।";
 
 
-    /*
-       Submit के बाद
-       नया blank row
-    */
+    /* New blank row */
 
     rows = [
-
       Array(
         cfg.columns.length
       ).fill("")
-
     ];
 
 
     render();
 
 
-  }catch(e){
+  }catch(error){
 
-    console.error(e);
+    console.error(
+      "SUBMIT ERROR:",
+      error
+    );
 
 
     $("msg").className =
@@ -1331,16 +1466,23 @@ async function submitForm(){
 
 
     $("msg").textContent =
-      "Error: " + e.message;
+      "Error: " +
+      error.message;
+
+
+  }finally{
+
+    $("submitBtn").disabled =
+      false;
 
   }
 
 }
 
 
-/* =========================
+/* =========================================================
    START
-========================= */
+========================================================= */
 
 load();
 
