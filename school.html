@@ -1,213 +1,1374 @@
 <!doctype html>
 <html lang="hi">
+
 <head>
+
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<meta
+  name="viewport"
+  content="width=device-width,initial-scale=1"
+>
+
 <title>School Information</title>
+
 <style>
-*{box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;color:#17202a}
-.wrap{max-width:1100px;margin:20px auto;padding:12px}
-.card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 3px 15px #0001}
-label{font-weight:700;display:block;margin:10px 0 6px}
-.scroll{overflow-x:auto;width:100%}
-table{border-collapse:collapse;width:max-content;min-width:100%}
-th,td{border:1px solid #d7dee8;padding:8px;vertical-align:middle}
-th{background:#eef3f8;text-align:left;font-size:16px;line-height:1.35;white-space:normal;word-break:break-word}
-td input{width:100%;min-width:130px;height:48px;padding:9px;border:1px solid #cbd5e1;border-radius:8px;font-size:16px}
-.btn{padding:10px 15px;border:0;border-radius:8px;margin:4px;cursor:pointer;font-size:15px}
-.blue{background:#2563eb;color:#fff}
-.green{background:#15803d;color:#fff}
-.red{background:#dc2626;color:#fff}
-.gray{background:#64748b;color:#fff}
-.hidden{display:none}
-.msg{padding:10px;margin-top:10px;border-radius:8px}
-.ok{background:#ecfdf3;color:#166534}
-.err{background:#fef2f2;color:#991b1b}
-.loading{background:#eff6ff;color:#1d4ed8}
-.required-head::after{content:" *";color:#dc2626}
-.school-fixed{padding:12px;background:#f8fafc;border:1px solid #d7dee8;border-radius:8px;font-weight:700}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:#f4f7fb;
+  margin:0;
+  color:#17202a;
+}
+
+.wrap{
+  max-width:1100px;
+  margin:20px auto;
+  padding:12px;
+}
+
+.card{
+  background:#fff;
+  border-radius:14px;
+  padding:20px;
+  box-shadow:0 3px 15px #0001;
+}
+
+h1{
+  margin-top:0;
+  color:#1e3a8a;
+}
+
+h2{
+  margin-top:20px;
+}
+
+label{
+  font-weight:700;
+  display:block;
+  margin:10px 0 6px;
+}
+
+select{
+  width:100%;
+  padding:12px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  font-size:16px;
+  background:#fff;
+}
+
+.scroll{
+  overflow-x:auto;
+  width:100%;
+}
+
+table{
+  border-collapse:collapse;
+  width:max-content;
+  min-width:100%;
+}
+
+th,
+td{
+  border:1px solid #d7dee8;
+  padding:8px;
+  vertical-align:middle;
+}
+
+th{
+  background:#eef3f8;
+  text-align:left;
+  font-size:16px;
+  line-height:1.35;
+  white-space:normal;
+  word-break:break-word;
+}
+
+td input{
+  width:100%;
+  min-width:130px;
+  height:48px;
+  padding:9px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  font-size:16px;
+}
+
+.btn{
+  padding:10px 15px;
+  border:0;
+  border-radius:8px;
+  margin:4px;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.blue{
+  background:#2563eb;
+  color:#fff;
+}
+
+.green{
+  background:#15803d;
+  color:#fff;
+}
+
+.red{
+  background:#dc2626;
+  color:#fff;
+}
+
+.gray{
+  background:#64748b;
+  color:#fff;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.msg{
+  padding:10px;
+  margin-top:10px;
+  border-radius:8px;
+}
+
+.ok{
+  background:#ecfdf3;
+  color:#166534;
+}
+
+.err{
+  background:#fef2f2;
+  color:#991b1b;
+}
+
+.loading{
+  background:#eff6ff;
+  color:#1d4ed8;
+}
+
+.required-head::after{
+  content:" *";
+  color:#dc2626;
+}
+
+.school-fixed{
+  margin-top:8px;
+  padding:12px;
+  background:#f8fafc;
+  border:1px solid #d7dee8;
+  border-radius:8px;
+  font-weight:700;
+  display:none;
+}
+
+.school-fixed.show{
+  display:block;
+}
+
+.info-box{
+  padding:12px;
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  border-radius:8px;
+  margin:12px 0;
+  color:#1e40af;
+}
+
+.required-note{
+  font-size:13px;
+  color:#dc2626;
+  margin-top:5px;
+}
+
 @media(max-width:600px){
- .wrap{margin:5px auto;padding:8px}
- .card{padding:14px}
- h1{font-size:22px}
- .btn{width:100%;margin:4px 0}
+
+  .wrap{
+    margin:5px auto;
+    padding:8px;
+  }
+
+  .card{
+    padding:14px;
+  }
+
+  h1{
+    font-size:22px;
+  }
+
+  .btn{
+    width:100%;
+    margin:4px 0;
+  }
+
+  th{
+    font-size:14px;
+  }
+
+  td input{
+    min-width:150px;
+  }
+
 }
+
 @media print{
- .no-print{display:none!important}
- html,body{margin:0!important;padding:0!important;background:#fff!important}
- .wrap,.card{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;box-shadow:none!important}
- .scroll{overflow:visible!important}
- table{width:100%!important;min-width:0!important;table-layout:fixed!important}
- th,td{padding:3px!important;font-size:8px!important;word-break:break-word!important}
- td input{min-width:0!important;height:auto!important;padding:2px!important;border:0!important;font-size:8px!important}
+
+  .no-print{
+    display:none!important;
+  }
+
+  html,
+  body{
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+  }
+
+  .wrap,
+  .card{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    box-shadow:none!important;
+  }
+
+  .scroll{
+    overflow:visible!important;
+  }
+
+  table{
+    width:100%!important;
+    min-width:0!important;
+    table-layout:fixed!important;
+  }
+
+  th,
+  td{
+    padding:3px!important;
+    font-size:8px!important;
+    word-break:break-word!important;
+  }
+
+  td input{
+    min-width:0!important;
+    height:auto!important;
+    padding:2px!important;
+    border:0!important;
+    font-size:8px!important;
+  }
+
 }
+
 </style>
+
 </head>
+
+
 <body>
-<div class="wrap"><div class="card">
-<h1 id="title">Loading...</h1>
 
-<label>School Name</label>
-<div id="schoolFixed" class="school-fixed">School select करें</div>
-<select id="school" class="hidden"></select>
 
-<div id="area" class="hidden">
+<div class="wrap">
+
+<div class="card">
+
+
+<h1 id="title">
+Loading...
+</h1>
+
+
+<!-- ==========================================
+     SCHOOL SELECT
+========================================== -->
+
+<label>
+School Name
+</label>
+
+
+<select id="school">
+
+<option value="">
+-- School Select करें --
+</option>
+
+</select>
+
+
+<div
+  id="schoolFixed"
+  class="school-fixed"
+></div>
+
+
+<div
+  id="schoolInfo"
+  class="info-box"
+>
+पहले अपना School Select करें।
+</div>
+
+
+<!-- ==========================================
+     MAIN AREA
+========================================== -->
+
+<div
+  id="area"
+  class="hidden"
+>
+
+
 <h2 id="schoolTitle"></h2>
-<div class="scroll"><table><thead id="head"></thead><tbody id="body"></tbody></table></div>
+
+
+<div class="required-note">
+* वाले Column भरना अनिवार्य है।
+</div>
+
+
+<div class="scroll">
+
+<table>
+
+<thead id="head"></thead>
+
+<tbody id="body"></tbody>
+
+</table>
+
+</div>
+
+
+<!-- ==========================================
+     BUTTONS
+========================================== -->
 
 <div class="no-print">
-  <button id="addRowBtn" class="btn blue hidden" onclick="addRow()">➕ Add Row</button>
-  <button class="btn green" onclick="submitForm()">☁️ Submit</button>
+
+
+<button
+  id="addRowBtn"
+  class="btn blue hidden"
+  onclick="addRow()"
+>
+➕ Add Row
+</button>
+
+
+<button
+  class="btn green"
+  onclick="submitForm()"
+>
+☁️ Submit
+</button>
+
+
 </div>
+
+
 <div id="msg"></div>
+
+
 </div>
-</div></div>
+
+
+</div>
+
+</div>
+
+
 
 <script>
-const API="https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
-const formId=new URLSearchParams(window.location.search).get("form");
-let cfg=null;
-let rows=[];
 
-const $=id=>document.getElementById(id);
-function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 
-async function apiCall(action,params={}){
-  let url=API+"?action="+encodeURIComponent(action);
-  Object.keys(params).forEach(k=>url+="&"+encodeURIComponent(k)+"="+encodeURIComponent(params[k]));
-  const r=await fetch(url,{method:"GET",redirect:"follow",cache:"no-store"});
-  const t=await r.text();
-  let d;
-  try{d=JSON.parse(t)}catch(e){throw new Error("Google API का response JSON नहीं है")}
-  if(d && d.ok===false) throw new Error(d.error||"Google API error");
-  return d;
+/* =================================================
+   GOOGLE APPS SCRIPT API
+================================================= */
+
+const API =
+"https://script.google.com/macros/s/AKfycbx99czGRhevoQAV38jxIG0uDUfuCkC_KkmKluibPbpwSQPj4592gTJnOtPmBrkDWScIGQ/exec";
+
+
+/* =================================================
+   FORM ID
+================================================= */
+
+const formId =
+new URLSearchParams(
+  window.location.search
+).get("form");
+
+
+/* =================================================
+   GLOBAL DATA
+================================================= */
+
+let cfg = null;
+
+let rows = [];
+
+
+/* =================================================
+   SHORT ID
+================================================= */
+
+const $ =
+id => document.getElementById(id);
+
+
+
+/* =================================================
+   HTML ESCAPE
+================================================= */
+
+function esc(value){
+
+  return String(
+    value ?? ""
+  )
+  .replace(
+    /[&<>"']/g,
+    function(m){
+
+      return {
+
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+
+      }[m];
+
+    }
+  );
+
 }
+
+
+
+/* =================================================
+   MESSAGE
+================================================= */
+
+function showMessage(
+  text,
+  type="ok"
+){
+
+  const box =
+    $("msg");
+
+  box.className =
+    "msg " + type;
+
+  box.textContent =
+    text;
+
+}
+
+
+
+/* =================================================
+   API CALL
+================================================= */
+
+async function apiCall(
+  action,
+  params={}
+){
+
+  let url =
+    API +
+    "?action=" +
+    encodeURIComponent(
+      action
+    );
+
+
+  Object.keys(params)
+    .forEach(
+      function(key){
+
+        url +=
+          "&" +
+          encodeURIComponent(key) +
+          "=" +
+          encodeURIComponent(
+            params[key]
+          );
+
+      }
+    );
+
+
+  const response =
+    await fetch(
+      url,
+      {
+        method:"GET",
+        redirect:"follow",
+        cache:"no-store"
+      }
+    );
+
+
+  const text =
+    await response.text();
+
+
+  let data;
+
+
+  try{
+
+    data =
+      JSON.parse(text);
+
+  }
+
+  catch(error){
+
+    throw new Error(
+      "Google API का response JSON नहीं है।"
+    );
+
+  }
+
+
+  return data;
+
+}
+
+
+
+/* =================================================
+   LOAD FORM
+================================================= */
 
 async function load(){
-  $("msg").className="msg loading";
-  $("msg").textContent="Form information load हो रही है...";
+
+  showMessage(
+    "Form information load हो रही है...",
+    "loading"
+  );
+
+
   try{
-    if(!formId) throw new Error("Form link में form ID नहीं है");
-    const data=await apiCall("getForm",{formId});
-    if(!data.ok||!data.form) throw new Error(data.error||"Form नहीं मिला");
-    cfg=data.form;
 
-    $("title").textContent=cfg.name||"School Information";
+    /* Form ID check */
 
-    if(!Array.isArray(cfg.schools)||!cfg.schools.length) throw new Error("इस Form में कोई School नहीं है");
+    if(!formId){
 
-    const school=document.createElement("select");
-    school.id="school";
-    school.className="hidden";
-    school.innerHTML='<option value="">-- अपना School Select करें --</option>'+
-      cfg.schools.map(s=>'<option value="'+esc(s)+'">'+esc(s)+'</option>').join("");
-    const old=$("school"); old.replaceWith(school);
+      throw new Error(
+        "Form link में form ID नहीं है।"
+      );
 
-    school.onchange=function(){
-      if(!this.value){
-        $("area").classList.add("hidden");
-        return;
-      }
-      $("schoolFixed").textContent=this.value;
-      $("schoolTitle").textContent=this.value;
+    }
 
-      rows=[Array(cfg.columns.length).fill("")];
-      render();
 
-      $("addRowBtn").classList.toggle("hidden",!cfg.allowAddRow);
-      $("area").classList.remove("hidden");
-      $("msg").className="";
-      $("msg").textContent="";
+    /* Get Form */
+
+    const data =
+      await apiCall(
+        "getForm",
+        {
+          formId:formId
+        }
+      );
+
+
+    if(
+      !data ||
+      !data.ok ||
+      !data.form
+    ){
+
+      throw new Error(
+        data?.error ||
+        "Form नहीं मिला।"
+      );
+
+    }
+
+
+    cfg =
+      data.form;
+
+
+    /* ==========================================
+       TITLE
+    ========================================== */
+
+    $("title").textContent =
+      cfg.name ||
+      "School Information";
+
+
+
+    /* ==========================================
+       SCHOOL LIST CHECK
+    ========================================== */
+
+    if(
+      !Array.isArray(
+        cfg.schools
+      ) ||
+      !cfg.schools.length
+    ){
+
+      throw new Error(
+        "इस Form में कोई School नहीं है।"
+      );
+
+    }
+
+
+
+    /* ==========================================
+       COLUMN CHECK
+    ========================================== */
+
+    if(
+      !Array.isArray(
+        cfg.columns
+      ) ||
+      !cfg.columns.length
+    ){
+
+      throw new Error(
+        "इस Form में कोई Column नहीं है।"
+      );
+
+    }
+
+
+
+    /* ==========================================
+       SCHOOL SELECT
+    ========================================== */
+
+    const school =
+      $("school");
+
+
+    school.innerHTML =
+      '<option value="">-- अपना School Select करें --</option>' +
+
+      cfg.schools
+        .map(
+          function(s){
+
+            return (
+
+              '<option value="' +
+              esc(s) +
+              '">' +
+              esc(s) +
+              '</option>'
+
+            );
+
+          }
+        )
+        .join("");
+
+
+
+    /* ==========================================
+       SCHOOL CHANGE
+    ========================================== */
+
+    school.onchange =
+      function(){
+
+        const selected =
+          String(
+            this.value || ""
+          ).trim();
+
+
+        /* No School */
+
+        if(!selected){
+
+          $("area")
+            .classList
+            .add("hidden");
+
+
+          $("schoolFixed")
+            .classList
+            .remove("show");
+
+
+          $("schoolInfo")
+            .classList
+            .remove("hidden");
+
+
+          $("schoolInfo").textContent =
+            "पहले अपना School Select करें।";
+
+
+          return;
+
+        }
+
+
+        /* Selected School */
+
+        $("schoolFixed")
+          .textContent =
+          selected;
+
+
+        $("schoolFixed")
+          .classList
+          .add("show");
+
+
+        $("schoolTitle")
+          .textContent =
+          selected;
+
+
+        $("schoolInfo").textContent =
+          "Selected School: " +
+          selected;
+
+
+        /* First row */
+
+        rows = [
+
+          Array(
+            cfg.columns.length
+          ).fill("")
+
+        ];
+
+
+        render();
+
+
+        /* Add Row */
+
+        $("addRowBtn")
+          .classList
+          .toggle(
+            "hidden",
+            cfg.allowAddRow !== true
+          );
+
+
+        $("area")
+          .classList
+          .remove("hidden");
+
+
+        $("msg").className =
+          "";
+
+        $("msg").textContent =
+          "";
+
+      };
+
+
+
+    /* ==========================================
+       INITIAL MESSAGE
+    ========================================== */
+
+    $("schoolInfo")
+      .classList
+      .remove("hidden");
+
+
+    $("schoolInfo").textContent =
+      "✓ Form और School List load हो गई। अब अपना School Select करें।";
+
+
+    $("msg").className =
+      "msg ok";
+
+
+    $("msg").textContent =
+      "✓ Form और School List load हो गई।";
+
+
+  }
+
+  catch(error){
+
+    $("title").textContent =
+      "Form Load Error";
+
+
+    $("msg").className =
+      "msg err";
+
+
+    $("msg").textContent =
+      "Error: " +
+      error.message;
+
+  }
+
+}
+
+
+
+/* =================================================
+   GET COLUMN OBJECT
+================================================= */
+
+function getColumn(
+  index
+){
+
+  const c =
+    cfg.columns[index];
+
+
+  if(
+    typeof c === "string"
+  ){
+
+    return {
+
+      name:c,
+
+      required:false
+
     };
 
-    $("schoolFixed").innerHTML="⬇️ ऊपर School select करें";
-    $("msg").className="msg ok";
-    $("msg").textContent="✓ Form और School List load हो गई।";
-  }catch(e){
-    $("title").textContent="Form Load Error";
-    $("msg").className="msg err";
-    $("msg").textContent="Error: "+e.message;
   }
+
+
+  return {
+
+    name:
+      c.name || "",
+
+    required:
+      !!c.required
+
+  };
+
 }
+
+
+
+/* =================================================
+   RENDER TABLE
+================================================= */
 
 function render(){
+
   if(!cfg)return;
 
-  $("head").innerHTML="<tr>"+
-    cfg.columns.map(function(c){
-      const col=typeof c==="string"?{name:c,required:false}:c;
-      return '<th class="'+(col.required?"required-head":"")+'">'+esc(col.name)+'</th>';
-    }).join("")+
-    '<th class="no-print">Delete</th></tr>';
 
-  $("body").innerHTML=rows.map(function(r,i){
-    return "<tr>"+
-      r.map(function(v,j){
-        const col=typeof cfg.columns[j]==="string"?{name:cfg.columns[j],required:false}:cfg.columns[j];
-        return '<td><input value="'+esc(v||"")+
-          '" '+(col.required?'required':'')+
-          ' oninput="rows['+i+']['+j+']=this.value"></td>';
-      }).join("")+
-      '<td class="no-print"><button class="btn red" onclick="delRow('+i+')">🗑️</button></td>'+
-      "</tr>";
-  }).join("");
+  /* ==========================================
+     HEAD
+  ========================================== */
+
+  let headHTML =
+    "<tr>";
+
+
+  cfg.columns
+    .forEach(
+      function(c,index){
+
+        const col =
+          getColumn(index);
+
+
+        headHTML +=
+
+          '<th class="' +
+
+          (
+            col.required
+              ? "required-head"
+              : ""
+          ) +
+
+          '">' +
+
+          esc(
+            col.name
+          ) +
+
+          "</th>";
+
+      }
+    );
+
+
+  /* Delete */
+
+  if(cfg.allowAddRow === true){
+
+    headHTML +=
+      '<th class="no-print">Delete</th>';
+
+  }
+
+
+  headHTML +=
+    "</tr>";
+
+
+  $("head").innerHTML =
+    headHTML;
+
+
+
+  /* ==========================================
+     BODY
+  ========================================== */
+
+  let bodyHTML = "";
+
+
+  rows.forEach(
+    function(row,rowIndex){
+
+      bodyHTML +=
+        "<tr>";
+
+
+      cfg.columns
+        .forEach(
+          function(c,colIndex){
+
+            const col =
+              getColumn(
+                colIndex
+              );
+
+
+            const value =
+              row[colIndex] ??
+              "";
+
+
+            bodyHTML +=
+
+              "<td>" +
+
+              '<input ' +
+
+              'type="text" ' +
+
+              'value="' +
+              esc(value) +
+              '" ' +
+
+              (
+                col.required
+                  ? "required "
+                  : ""
+              ) +
+
+              'placeholder="' +
+              esc(col.name) +
+              '" ' +
+
+              'oninput="' +
+
+              "rows[" +
+              rowIndex +
+              "][" +
+              colIndex +
+              "]=this.value" +
+
+              '">' +
+
+              "</td>";
+
+          }
+        );
+
+
+      /* Delete */
+
+      if(
+        cfg.allowAddRow === true
+      ){
+
+        bodyHTML +=
+
+          '<td class="no-print">' +
+
+          '<button ' +
+
+          'class="btn red" ' +
+
+          'onclick="delRow(' +
+          rowIndex +
+          ')"' +
+
+          '>🗑️</button>' +
+
+          "</td>";
+
+      }
+
+
+      bodyHTML +=
+        "</tr>";
+
+    }
+  );
+
+
+  $("body").innerHTML =
+    bodyHTML;
+
 }
+
+
+
+/* =================================================
+   ADD ROW
+================================================= */
 
 function addRow(){
-  if(!cfg||!cfg.allowAddRow)return;
-  rows.push(Array(cfg.columns.length).fill(""));
+
+  if(
+    !cfg ||
+    cfg.allowAddRow !== true
+  ){
+
+    return;
+
+  }
+
+
+  rows.push(
+
+    Array(
+      cfg.columns.length
+    ).fill("")
+
+  );
+
+
   render();
+
 }
 
-function delRow(i){
-  if(rows.length>1) rows.splice(i,1);
-  else rows[0]=Array(cfg.columns.length).fill("");
+
+
+/* =================================================
+   DELETE ROW
+================================================= */
+
+function delRow(
+  index
+){
+
+  if(
+    rows.length > 1
+  ){
+
+    rows.splice(
+      index,
+      1
+    );
+
+  }
+
+  else{
+
+    rows[0] =
+      Array(
+        cfg.columns.length
+      ).fill("");
+
+  }
+
+
   render();
+
 }
+
+
+
+/* =================================================
+   CHECK MANDATORY
+================================================= */
 
 function validateRequired(){
-  const errors=[];
-  rows.forEach((r,i)=>{
-    const hasAny=r.some(v=>String(v??"").trim()!=="");
-    if(!hasAny)return;
-    cfg.columns.forEach((c,j)=>{
-      const col=typeof c==="string"?{name:c,required:false}:c;
-      if(col.required && String(r[j]??"").trim()==="") errors.push("Row "+(i+1)+" में '"+col.name+"' भरना जरूरी है");
-    });
-  });
+
+  const errors = [];
+
+
+  rows.forEach(
+    function(row,rowIndex){
+
+      /* Completely blank row */
+
+      const hasAny =
+        row.some(
+          function(value){
+
+            return String(
+              value ?? ""
+            ).trim() !== "";
+
+          }
+        );
+
+
+      if(!hasAny){
+
+        return;
+
+      }
+
+
+      cfg.columns
+        .forEach(
+          function(c,colIndex){
+
+            const col =
+              getColumn(
+                colIndex
+              );
+
+
+            if(
+              col.required &&
+              String(
+                row[colIndex] ??
+                ""
+              ).trim() === ""
+            ){
+
+              errors.push(
+
+                "Row " +
+                (rowIndex + 1) +
+                " में '" +
+                col.name +
+                "' भरना जरूरी है।"
+
+              );
+
+            }
+
+          }
+        );
+
+    }
+  );
+
+
   return errors;
+
 }
+
+
+
+/* =================================================
+   SUBMIT FORM
+================================================= */
 
 async function submitForm(){
-  const school=$("school").value;
-  if(!school){alert("पहले School Select करें");return}
 
-  const data=rows.filter(r=>r.some(v=>String(v??"").trim()!==""));
-  if(!data.length){alert("कम से कम एक row भरें");return}
+  const school =
+    String(
+      $("school").value ||
+      ""
+    ).trim();
 
-  const errors=validateRequired();
-  if(errors.length){
-    alert("Mandatory information पूरी करें:\n\n"+errors.join("\n"));
+
+  /* School */
+
+  if(!school){
+
+    alert(
+      "पहले अपना School Select करें।"
+    );
+
     return;
+
   }
+
+
+  /* Only rows having data */
+
+  const data =
+    rows.filter(
+      function(row){
+
+        return row.some(
+          function(value){
+
+            return String(
+              value ?? ""
+            ).trim() !== "";
+
+          }
+        );
+
+      }
+    );
+
+
+  if(!data.length){
+
+    alert(
+      "कम से कम एक row की information भरें।"
+    );
+
+    return;
+
+  }
+
+
+  /* Mandatory */
+
+  const errors =
+    validateRequired();
+
+
+  if(errors.length){
+
+    alert(
+
+      "Mandatory information पूरी करें:\n\n" +
+
+      errors.join("\n")
+
+    );
+
+    return;
+
+  }
+
+
+
+  /* Submit */
 
   try{
-    $("msg").className="msg loading";
-    $("msg").textContent="Google Sheet में save हो रहा है...";
-    const result=await apiCall("submit",{formId,school,rows:JSON.stringify(data)});
-    if(!result||!result.ok) throw new Error(result?.error||"Save नहीं हुआ");
-    $("msg").className="msg ok";
-    $("msg").textContent="✓ "+result.count+" row Google Sheet में save हो गई।";
-    rows=[Array(cfg.columns.length).fill("")];
+
+    showMessage(
+      "Google Sheet में save हो रहा है...",
+      "loading"
+    );
+
+
+    const result =
+      await apiCall(
+        "submit",
+        {
+
+          formId:
+            formId,
+
+          school:
+            school,
+
+          rows:
+            JSON.stringify(
+              data
+            )
+
+        }
+      );
+
+
+    if(
+      !result ||
+      !result.ok
+    ){
+
+      throw new Error(
+        result?.error ||
+        "Save नहीं हुआ।"
+      );
+
+    }
+
+
+    /* Success */
+
+    showMessage(
+
+      "✓ " +
+      (
+        result.count ||
+        data.length
+      ) +
+      " row Google Sheet में save हो गई।",
+
+      "ok"
+
+    );
+
+
+    /* Reset */
+
+    rows = [
+
+      Array(
+        cfg.columns.length
+      ).fill("")
+
+    ];
+
+
     render();
-  }catch(e){
-    $("msg").className="msg err";
-    $("msg").textContent="Error: "+e.message;
+
+
+    /*
+      School selected ही रहेगा।
+      इसलिए अगली information उसी School की
+      submit की जा सकती है।
+    */
+
+
   }
+
+  catch(error){
+
+    showMessage(
+
+      "Error: " +
+      error.message,
+
+      "err"
+
+    );
+
+  }
+
 }
 
+
+
+/* =================================================
+   START
+================================================= */
+
 load();
+
 </script>
+
 </body>
+
 </html>
